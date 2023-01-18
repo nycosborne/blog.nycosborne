@@ -31,6 +31,7 @@ function DefaultLayout() {
         row: {
             marginBottom: 0
         }
+
     }
 
     if (!token) {
