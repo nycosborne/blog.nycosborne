@@ -8,25 +8,26 @@ import NavBar from "./NavBar.jsx";
 
 function DefaultLayout() {
 
-    const {user, token} = useStateContext();
+    const {token} = useStateContext();
 
     const styles = {
         container: {
-
+            maxWidth: '100%',
         },
         left: {
             overflowY: '100%',
+            width: '180px',
             padding: 0,
+            paddingLeft: 40,
             height: window.innerHeight,
-            backgroundColor: 'white',
-            transition: 'all 2.2s',
+            backgroundColor: '#987D7C'
         },
         right: {
-            height: window.innerHeight, // I want to change this
+            height: window.innerHeight,
             padding: 0,
             margin: 0,
             overflow: 'hidden',
-            backgroundColor: 'yellow'
+            backgroundColor: '#F6BE9A'
         },
         row: {
             marginBottom: 0
@@ -41,20 +42,25 @@ function DefaultLayout() {
     return (
         <div>
             <NavBar/>
-            <Container>
-                <Row>
-                    <Col xs="12" sm="4" md="4" lg="3" style={ styles.left }>
-                        <Row><Link to="/dashboard">Dashboard</Link></Row>
-                        <Row><Link to="/users">Users</Link></Row>
-                        <Row><Link to="/posts">Posts</Link></Row>
-                    </Col>
-                    <Col xs="12" sm="8" md="8" lg="9" style={ styles.right }>
-                        {`{"Outlit!!!"}`}
-                        <Outlet/>
-                    </Col>
-                </Row>
+            <Container fluid>
+            <Row>
+                <Col xs={4} sm={4} md={4} lg={4} style={ styles.left }>
+                    <Row><Link to="/dashboard">Dashboard</Link></Row>
+                    <Row><Link to="/users">Users</Link></Row>
+                    <Row><Link to="/posts">Posts</Link></Row>
+                </Col>
+
+                <Col style={ styles.right }>
+                    {`{"Outlit!!!"}`}
+                    <Outlet/>
+                </Col>
+
+            </Row>
             </Container>
         </div>
+
+
+
     );
 }
 
