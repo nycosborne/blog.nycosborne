@@ -24,7 +24,7 @@ function DefaultLayout() {
         },
         right: {
             height: window.innerHeight,
-            padding: 0,
+            padding: 40,
             margin: 0,
             overflow: 'hidden',
             backgroundColor: '#F6BE9A'
