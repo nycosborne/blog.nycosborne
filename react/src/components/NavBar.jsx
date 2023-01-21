@@ -5,10 +5,11 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import {Link} from "react-router-dom";
 import Row from "react-bootstrap/Row";
 import {useStateContext} from "../context/ContextProvider.jsx";
+import axiosClient from "../axios-client.js";
 
 function NavBar() {
 
-    const {user} = useStateContext();
+    const {user, setUser, setToken} = useStateContext();
 
     const styles = {
         container: {
@@ -20,6 +21,12 @@ function NavBar() {
 
     const onLogout = (ev) => {
         ev.preventDefault();
+        axiosClient.post('/logout')
+            .then(()=>{
+                setUser({});
+                setToken(null);
+            })
+
     }
 
     return (

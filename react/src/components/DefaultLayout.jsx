@@ -4,11 +4,13 @@ import {Container} from "react-bootstrap";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import NavBar from "./NavBar.jsx";
+import {useEffect} from "react";
+import axiosClient from "../axios-client.js";
 
 
 function DefaultLayout() {
 
-    const {token} = useStateContext();
+    const {setUser,token} = useStateContext();
 
     const styles = {
         container: {
@@ -34,6 +36,13 @@ function DefaultLayout() {
         }
 
     }
+
+    useEffect(()=>{
+        axiosClient.get('/user')
+            .then(({data})=>{
+                setUser(data)
+            })
+    },[])
 
     if (!token) {
         return <Navigate to='/login'/>

@@ -1,6 +1,6 @@
 import {Button, Form} from "react-bootstrap";
 import {Link} from "react-router-dom";
-import {createRef} from "react";
+import {createRef, useState} from "react";
 import axiosClient from "../axios-client.js";
 import {useStateContext} from "../context/ContextProvider.jsx";
 
@@ -9,6 +9,7 @@ export default function Login() {
     const emailRef = createRef()
     const passwordRef = createRef()
 
+    const [errors, setErrors] = useState([])
     const {setUser,setToken} = useStateContext()
 
     const logIn = (ev) => {
@@ -27,8 +28,13 @@ export default function Login() {
             .catch((error) => {
                 const response = error.response
                 if (response && response.status === 422) {
-                    setErrors((response.data.errors))
-                    console.log(response.data.errors);
+                    if(response.data.error) {
+                        setErrors(response.data.errors)
+                    }else {
+                        setErrors({
+                            error: [response.data.message]
+                        })
+                    }
                 }
             })
 
@@ -38,6 +44,16 @@ export default function Login() {
         <Form onSubmit={logIn} className={'animated fadeInDown'}>
             <h1>Log In</h1>
             <Form.Group className="mb-3" controlId="formBasicEmail">
+
+                {errors && <div style={{background: "lightpink"}}>
+                    <ul>
+                        {Object.keys(errors).map(key => (
+                            <li key={key}>{errors[key][0]}</li>
+                        ))
+                        }
+                    </ul>
+                </div>
+                }
                 <Form.Label>Email address</Form.Label>
                 <Form.Control ref={emailRef} type="email" placeholder="Enter email"/>
                 <Form.Text className="text-muted">
