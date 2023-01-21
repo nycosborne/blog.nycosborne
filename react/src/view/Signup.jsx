@@ -12,6 +12,7 @@ export default function Signup() {
     const passwordRef = createRef()
     const passwordConfirmationRef = createRef()
 
+    const [errors, setErrors] = useState([])
     const {setUser, setToken} = useStateContext()
 
     const signUp = (ev) => {
@@ -27,12 +28,13 @@ export default function Signup() {
         axiosClient.post('/signup', payload)
             .then(({data}) => {
                 setUser(data.user);
-                // setToken(data.token)
+                setToken(data.token)
             })
-            .catch((error)=>{
+            .catch((error) => {
                 const response = error.response
-                if(response && response.status === 422){
-                    console.log("POST request to /signup had failed ")
+                if (response && response.status === 422) {
+                    setErrors((response.data.errors))
+                    console.log(response.data.errors);
                 }
             })
 
@@ -42,6 +44,17 @@ export default function Signup() {
         <Form onSubmit={signUp} className={'animated fadeInDown'}>
             <h1>Sign Up</h1>
             <Form.Group className="mb-3" controlId="name">
+
+                {errors && <div style={{background: "lightpink"}}>
+                    <ul>
+                        {Object.keys(errors).map(key => (
+                            <li key={key}>{errors[key][0]}</li>
+                        ))
+                        }
+                    </ul>
+                </div>
+                }
+
                 <Form.Label>Name</Form.Label>
                 <Form.Control ref={nameRef} type="text" placeholder="Name"/>
             </Form.Group>

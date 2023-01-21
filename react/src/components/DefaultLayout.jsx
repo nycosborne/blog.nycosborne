@@ -51,7 +51,6 @@ function DefaultLayout() {
                 </Col>
 
                 <Col style={ styles.right }>
-                    {`{"Outlit!!!"}`}
                     <Outlet/>
                 </Col>
 
