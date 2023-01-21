@@ -10,3 +10,11 @@ body {
     padding-top: 55px ;
 }
 
+.login-signup-form {
+    height: 100vh;
+    padding-bottom: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: beige;
+}

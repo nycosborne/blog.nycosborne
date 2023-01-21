@@ -12,7 +12,6 @@ function GuestLayout() {
 
     return (
         <div>
-            Guest User Layout!!
             <Outlet/>
         </div>
     );
