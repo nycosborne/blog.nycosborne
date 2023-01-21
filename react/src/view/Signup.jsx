@@ -1,6 +1,9 @@
 import {Button, Container, Form} from "react-bootstrap";
 import {Link} from "react-router-dom";
-import {createRef} from "react";
+import {createRef, useState} from "react";
+import axiosClient from "../axios-client.js";
+import {useStateContext} from "../context/ContextProvider.jsx";
+
 
 export default function Signup() {
 
@@ -9,9 +12,29 @@ export default function Signup() {
     const passwordRef = createRef()
     const passwordConfirmationRef = createRef()
 
+    const {setUser, setToken} = useStateContext()
+
     const signUp = (ev) => {
         ev.preventDefault();
-        console.log();
+
+        const payload = {
+            name: nameRef.current.value,
+            email: emailRef.current.value,
+            password: passwordRef.current.value,
+            password_confirmation: passwordConfirmationRef.current.value
+        }
+
+        axiosClient.post('/signup', payload)
+            .then(({data}) => {
+                setUser(data.user);
+                // setToken(data.token)
+            })
+            .catch((error)=>{
+                const response = error.response
+                if(response && response.status === 422){
+                    console.log("POST request to /signup had failed ")
+                }
+            })
 
     }
 
@@ -20,7 +43,7 @@ export default function Signup() {
             <h1>Sign Up</h1>
             <Form.Group className="mb-3" controlId="name">
                 <Form.Label>Name</Form.Label>
-                <Form.Control ref={nameRef} type="email" placeholder="Name"/>
+                <Form.Control ref={nameRef} type="text" placeholder="Name"/>
             </Form.Group>
             <Form.Group className="mb-3" controlId="email">
                 <Form.Label>Email address</Form.Label>
