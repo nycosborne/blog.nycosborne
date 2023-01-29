@@ -14,7 +14,7 @@ export default function Posts(){
 
     useEffect(()=>{
         setLoading(true);
-        axiosClient.get('/post')
+        axiosClient.get('/posts')
             .then(({data}) => {
                 setLoading(false);
                 setPosts(data.data)

@@ -54,15 +54,17 @@ export default function PostForm() {
                 })
         } else {
             axiosClient.post('/posts', post)
-                .then(() => {
-                    // navigate('/users')
-                })
-                .catch(err => {
-                    const response = err.response;
-                    if (response && response.status === 422) {
-                        setErrors(response.data.errors)
-                    }
-                })
+
+            console.log(post);
+                // .then(() => {
+                //     // navigate('/users')
+                // })
+                // .catch(err => {
+                //     const response = err.response;
+                //     if (response && response.status === 422) {
+                //         setErrors(response.data.errors)
+                //     }
+                // })
         }
     }
 
@@ -82,6 +84,18 @@ export default function PostForm() {
                             as="textarea"
                             placeholder="Leave a comment here"/>
                     </FloatingLabel>
+
+                    <FloatingLabel
+                        controlId="floatingTextarea"
+                        label="Excerpt"
+                        className="mb-3"
+                    >
+                        <Form.Control
+                            value={post.excerpt} onChange={ev => setPost({...post, excerpt: ev.target.value})}
+                            as="textarea"
+                            placeholder="Leave a comment here"/>
+                    </FloatingLabel>
+
                     <FloatingLabel
                         controlId="floatingTextarea"
                         label="Content"

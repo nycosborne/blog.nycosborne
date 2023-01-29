@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreatePost;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class PostController extends Controller
 {
@@ -25,22 +27,26 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create()
     {
-        return response([
-            'messgae' => 'this HEre'
-        ]);
+
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param CreatePost $request
+     * @return Response
      */
-    public function store(Request $request)
+    public function store(CreatePost $request)
     {
-        //
+
+        $data = $request->validated();
+        $post = Post::create($data);
+
+        return response([
+            'post' => json_encode($data)
+        ]);
     }
 
     /**
