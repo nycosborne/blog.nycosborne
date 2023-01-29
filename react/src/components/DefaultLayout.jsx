@@ -57,6 +57,7 @@ function DefaultLayout() {
                     <Row><Link to="/dashboard">Dashboard</Link></Row>
                     <Row><Link to="/users">Users</Link></Row>
                     <Row><Link to="/posts">Posts</Link></Row>
+                    <Row><Link to="/posts/new">New Posts</Link></Row>
                 </Col>
 
                 <Col style={ styles.right }>

@@ -7,6 +7,7 @@ import DefaultLayout from "./components/DefaultLayout.jsx";
 import GuestLayout from "./components/GuestLayout.jsx";
 import Dashboard from "./view/Dashboard.jsx";
 import Posts from "./view/Posts.jsx";
+import PostForm from "./view/PostForm.jsx";
 
 const router = createBrowserRouter([
     {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
             {
                 path: '/posts',
                 element: <Posts/>
+            },
+            {
+                path: '/posts/new',
+                element: <PostForm/>
             }
         ]
 

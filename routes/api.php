@@ -22,7 +22,7 @@ Route::middleware('auth:sanctum')->group(function () {
         return $request->user();
     });
 
-    Route::apiResource('/post', PostController::class);
+    Route::apiResource('/posts', PostController::class);
 });
 
 
