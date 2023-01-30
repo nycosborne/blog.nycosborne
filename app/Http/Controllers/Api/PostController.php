@@ -42,8 +42,8 @@ class PostController extends Controller
     {
 
         $data = $request->validated();
-        $post = Post::create($data);
 
+        Post::create($data);
         return response([
             'post' => json_encode($data)
         ]);

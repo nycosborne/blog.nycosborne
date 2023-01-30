@@ -1,8 +1,8 @@
 import {useNavigate, useParams} from "react-router-dom";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import axiosClient from "../axios-client.js";
 import {useStateContext} from "../context/ContextProvider.jsx";
-import {Button, FloatingLabel, Form} from "react-bootstrap";
+import {Button, Dropdown, FloatingLabel, Form} from "react-bootstrap";
 
 export default function PostForm() {
 
@@ -12,16 +12,15 @@ export default function PostForm() {
         id: null,
         title: '',
         content: '',
-        excerpt: ''
+        excerpt: '',
+        category_id: 0
     })
 
-    const [errors, setErrors] = useState(null)
-    const [loading, setLoading] = useState(false)
 
+    const [errors, setErrors] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     if (id) {
-
-
         useEffect(() => {
             setLoading(true)
             axiosClient.get(`/posts/${id}`)
@@ -35,9 +34,30 @@ export default function PostForm() {
         }, [])
     }
 
+
+    const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+        <a
+            href=""
+            ref={ref}
+            onClick={(e) => {
+                e.preventDefault();
+                onClick(e);
+                console.log(e.target.valueOf());
+            }}
+        >
+            {children}
+            &#x25bc;
+        </a>
+    ));
+
+
+    function dropDownPick(ev) {
+        ev.preventDefault();
+        console.log('herer');
+    }
+
     function onSubmit(ev) {
         console.log(post);
-
         ev.preventDefault();
 
         if (post.id) {
@@ -108,6 +128,17 @@ export default function PostForm() {
                             style={{height: '200px'}}/>
                     </FloatingLabel>
                 </Form.Group>
+{/*todo make the drop down option a dynamics DB pull*/}
+                <Dropdown>
+                    <Dropdown.Toggle variant="success" id="dropdown-basic">
+                        Dropdown Button
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu>
+                        <Dropdown.Item onClick={ev => setPost({...post, category_id: 1})}>Personal</Dropdown.Item>
+                        <Dropdown.Item onClick={ev => setPost({...post, category_id: 2})}>Work</Dropdown.Item>
+                        <Dropdown.Item onClick={ev => setPost({...post, category_id: 3})}>Hobbies</Dropdown.Item>
+                    </Dropdown.Menu>
+                </Dropdown>
                 <Button variant="primary" type="submit">
                     Submit
                 </Button>
