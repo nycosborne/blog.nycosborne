@@ -10,7 +10,7 @@ export default function Post() {
     let {id} = useParams();
     const [post, setPost] = useState({
         id: null,
-        title: '',
+        title: 'heeeee',
         content: '',
         excerpt: '',
         created: null
@@ -24,20 +24,14 @@ export default function Post() {
 
             axiosClient.get(`/posts/${id}`)
                 .then(({data}) => {
-
                     setLoading(false)
-                    setPost({'title': 'test'})
-
-                    console.log(data);
+                    setPost(data);
                 })
                 .catch(() => {
                     setLoading(false)
                 })
         }, [])
     }
-
-
-
 
     return (
         <div>
