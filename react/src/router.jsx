@@ -5,11 +5,24 @@ import Users from "./view/Users.jsx";
 import NotFount from "./view/NotFount.jsx";
 import DefaultLayout from "./components/DefaultLayout.jsx";
 import GuestLayout from "./components/GuestLayout.jsx";
+import MasterLayout from "./components/MasterLayout.jsx";
 import Dashboard from "./view/Dashboard.jsx";
 import Posts from "./view/Posts.jsx";
+import Post from "./view/Post.jsx";
 import PostForm from "./view/PostForm.jsx";
 
 const router = createBrowserRouter([
+    {
+        path: '/',
+        element: <MasterLayout/>,
+        children: [
+            {
+                path: '/post/:id',
+                element: <Post/>
+            }
+        ]
+
+    },
     {
         path: '/',
         element: <DefaultLayout/>,

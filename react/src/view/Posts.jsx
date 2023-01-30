@@ -29,11 +29,10 @@ export default function Posts(){
         <Col>
             {posts.map(p => (
                 <Col key={p.id}>
-                    <h2>{p.title}</h2>
-                    <div>{p.summary}</div>
-                    <div>{p.content}</div>
+                    <h1><Link to={'/post/' + p.id}>{p.title}</Link></h1>
+                    {/*<div>{p.excerpt}</div>*/}
 
-                        <Link className="btn-edit" to={'/user/' + p.id}>Edit</Link>
+                        {/*<Link className="btn-edit" to={'/user/' + p.id}>Edit</Link>*/}
                         &nbsp;
                         {/*<button className="btn-delete" onClick={ev => onDeleteClick(p)}>Delete</button>*/}
 
