@@ -13,7 +13,7 @@ export default function PostForm() {
         title: '',
         content: '',
         excerpt: '',
-        category_id: 0
+        category_id: null
     })
 
 
@@ -33,22 +33,6 @@ export default function PostForm() {
                 })
         }, [])
     }
-
-
-    const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
-        <a
-            href=""
-            ref={ref}
-            onClick={(e) => {
-                e.preventDefault();
-                onClick(e);
-                console.log(e.target.valueOf());
-            }}
-        >
-            {children}
-            &#x25bc;
-        </a>
-    ));
 
 
     function dropDownPick(ev) {
