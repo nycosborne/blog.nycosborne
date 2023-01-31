@@ -22,13 +22,13 @@ export default function Posts(){
             setLoading(false)
         })
     },[])
-      
+
     return (
     <Container>
         <Col>
             {posts.map(p => (
                 <Col key={p.id}>
-                    <h1><Link to={'/post/' + p.id}>{p.title}</Link></h1>
+                    <h1><Link to={'/post/' + p.slug}>{p.title}</Link></h1>
                     {/*<div>{p.excerpt}</div>*/}
 
                         {/*<Link className="btn-edit" to={'/user/' + p.id}>Edit</Link>*/}

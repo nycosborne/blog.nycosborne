@@ -10,12 +10,14 @@ export default function Post() {
 
     const navigate = useNavigate();
     let {id} = useParams();
+    console.log(id)
     const [post, setPost] = useState({
         id: null,
-        title: 'heeeee',
+        title: '',
         content: '',
         excerpt: '',
-        created: null
+        created: null,
+        slug: ''
     })
 
     const [errors, setErrors] = useState(null);

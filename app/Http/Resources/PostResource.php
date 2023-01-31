@@ -21,7 +21,8 @@ class PostResource extends JsonResource
             'title' => $this->title,
             'excerpt' => $this->excerpt,
             'content' => $this->content,
-            'created' => $this->created_at->format('Y-m-d H:i:s')
+            'created' => $this->created_at->format('Y-m-d H:i:s'),
+            'slug' => $this->slug
         ];
 //        return parent::toArray($request);
     }

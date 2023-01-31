@@ -23,7 +23,9 @@ Route::middleware('auth:sanctum')->group(function () {
         return $request->user();
     });
 
-    Route::apiResource('/posts', PostController::class);
+    Route::apiResource('/posts', PostController::class)->scoped([
+        'post' => 'slug',
+    ]);
     Route::apiResource('/categories', CategoryController::class);
 });
 
