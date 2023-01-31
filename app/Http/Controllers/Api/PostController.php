@@ -21,7 +21,7 @@ class PostController extends Controller
     public function index()
     {
 //        return PostResource::collection(Post::query()->orderBy('id', 'desc')->paginate(10));
-        return PostResource::collection(Post::with('category')->get());
+        return PostResource::collection(Post::all());
 //        return PostResource::collection(Post::with('category')->first());
 //clock(json_encode(Post::with('category')->get()));
 
