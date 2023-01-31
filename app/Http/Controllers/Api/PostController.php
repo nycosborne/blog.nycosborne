@@ -9,19 +9,27 @@ use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use mysql_xdevapi\Collection;
 
 class PostController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function index()
     {
 //        return PostResource::collection(Post::query()->orderBy('id', 'desc')->paginate(10));
-//        return PostResource::collection(Post::all());
         return PostResource::collection(Post::with('category')->get());
+//        return PostResource::collection(Post::with('category')->first());
+//clock(json_encode(Post::with('category')->get()));
+
+//        return response([
+//            Post::with('category')->get()
+//        ]);
+
+//        return new PostResource(Post::with('category')->get());
     }
 
     /**

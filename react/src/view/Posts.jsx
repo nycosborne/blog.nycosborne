@@ -5,6 +5,7 @@ import {useStateContext} from "../context/ContextProvider.jsx";
 import {Container} from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
+import {forEach} from "react-bootstrap/ElementChildren";
 
 export default function Posts(){
 
@@ -16,19 +17,23 @@ export default function Posts(){
         setLoading(true);
         axiosClient.get('/posts')
             .then(({data}) => {
+                // console.log(data);
                 setLoading(false);
                 setPosts(data.data)
             }).catch(() => {
             setLoading(false)
         })
     },[])
+console.log('posts', posts);
 
     return (
     <Container>
         <Col>
-            {posts.map(p => (
+            {
+                posts.map(p => (
                 <Col key={p.id}>
                     <h1><Link to={'/post/' + p.slug}>{p.title}</Link></h1>
+                    <h3>{p.category_name}</h3>
                     {/*<div>{p.excerpt}</div>*/}
 
                         {/*<Link className="btn-edit" to={'/user/' + p.id}>Edit</Link>*/}

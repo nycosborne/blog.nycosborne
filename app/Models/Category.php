@@ -22,7 +22,7 @@ class Category extends Model
         'content'
     ];
 
-    public function posts(): HasMany
+    public function post(): HasMany
     {
         return $this->hasMany(Post::class);
     }
