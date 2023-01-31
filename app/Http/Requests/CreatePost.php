@@ -27,6 +27,7 @@ class CreatePost extends FormRequest
             'title' => 'string',
             'content' => 'string',
             'excerpt' => 'string',
+            'slug' => 'string',
             'category_id' => 'integer'
         ];
     }

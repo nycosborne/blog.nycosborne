@@ -18,6 +18,10 @@ const router = createBrowserRouter([
         children: [
             {
                 path: '/',
+                element: <Navigate to="/posts"/>
+            },
+            {
+                path: '/posts',
                 element: <Posts/>
             },
             {

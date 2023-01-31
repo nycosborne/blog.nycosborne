@@ -35,11 +35,6 @@ export default function PostForm() {
     }
 
 
-    function dropDownPick(ev) {
-        ev.preventDefault();
-        console.log('herer');
-    }
-
     function onSubmit(ev) {
         console.log(post);
         ev.preventDefault();
@@ -85,6 +80,17 @@ export default function PostForm() {
                     >
                         <Form.Control
                             value={post.title} onChange={ev => setPost({...post, title: ev.target.value})}
+                            as="textarea"
+                            placeholder="Leave a comment here"/>
+                    </FloatingLabel>
+
+                    <FloatingLabel
+                        controlId="floatingTextarea"
+                        label="slug"
+                        className="mb-3"
+                    >
+                        <Form.Control
+                            value={post.slug} onChange={ev => setPost({...post, slug: ev.target.value})}
                             as="textarea"
                             placeholder="Leave a comment here"/>
                     </FloatingLabel>
