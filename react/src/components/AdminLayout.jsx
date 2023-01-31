@@ -8,7 +8,7 @@ import {useEffect} from "react";
 import axiosClient from "../axios-client.js";
 
 
-function DefaultLayout() {
+function AdminLayout() {
 
     const {setUser,token} = useStateContext();
 
@@ -73,4 +73,4 @@ function DefaultLayout() {
     );
 }
 
-export default DefaultLayout;
+export default AdminLayout;

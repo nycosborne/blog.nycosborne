@@ -2,7 +2,9 @@ import {useNavigate, useParams} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import axiosClient from "../axios-client.js";
 import {useStateContext} from "../context/ContextProvider.jsx";
-import {Button, Dropdown, FloatingLabel, Form} from "react-bootstrap";
+import {Button, Container, Dropdown, FloatingLabel, Form} from "react-bootstrap";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 export default function Post() {
 
@@ -35,9 +37,13 @@ export default function Post() {
 
     return (
         <div>
+            <Container>
+                <Row>
+                    <Col>
             {post.id && <h1>{post.title} {post.title}</h1>}
-            {post.id && <h1>New Post</h1>}
-
+                    </Col>
+                </Row>
+            </Container>
         </div>
     )
 }

@@ -22,8 +22,7 @@ export default function Posts(){
             setLoading(false)
         })
     },[])
-
-    console.log(posts);
+      
     return (
     <Container>
         <Col>
