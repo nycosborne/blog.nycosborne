@@ -25,14 +25,13 @@ export default function Categories(){
         })
     },[])
 
-console.log(categories);
     return (
         <Container>
             <Col>
                 {
                     categories.map(c => (
                         <Col key={c.id}>
-                            <h1><Link to={'/post/' + c.slug}>{c.category_name}</Link></h1>
+                            <h1><Link to={'/posts/categories/' + c.slug}>{c.category_name}</Link></h1>
                             <h3>{c.category_name}</h3>
                             {/*<div>{p.excerpt}</div>*/}
 

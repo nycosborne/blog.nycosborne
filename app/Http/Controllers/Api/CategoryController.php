@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Http\Resources\CategoryResource;
+use App\Http\Resources\PostResource;
 use App\Models\Category;
+use http\Env\Response;
 
 class CategoryController extends Controller
 {
@@ -17,6 +19,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
+        clock(request());
         return CategoryResource::collection(Category::all());
     }
 
@@ -45,11 +48,15 @@ class CategoryController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
+     * @return PostResource
      */
     public function show(Category $category)
     {
-        //
+
+//        return CategoryResource::collection($category);
+        clock($category);
+//        return new PostResource($category->post);
+        return response(['messgae' => 'test']);
     }
 
     /**

@@ -10,6 +10,7 @@ class Category extends Model
 {
     use HasFactory;
 
+//    protected $with = ['post'];
 
     /**
      * The attributes that are mass assignable.
@@ -24,7 +25,8 @@ class Category extends Model
 
     public function post(): HasMany
     {
-        return $this->hasMany(Post::class);
+//        return $this->hasMany(Post::class, 'id');
+        return $this->hasMany(Post::class, 'category_id');
     }
 
 }

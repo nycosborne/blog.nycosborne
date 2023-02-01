@@ -19,6 +19,10 @@ const router = createBrowserRouter([
         element: <MasterLayout/>,
         children: [
             {
+                path: '/categories/:cat_slug',
+                element: <Posts/>
+            },
+            {
                 path: '/',
                 element: <Navigate to="/posts"/>
             },
@@ -27,7 +31,7 @@ const router = createBrowserRouter([
                 element: <Posts/>
             },
             {
-                path: '/post/:id',
+                path: '/post/:post_slug',
                 element: <Post/>
             },
             {

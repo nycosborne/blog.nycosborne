@@ -9,7 +9,7 @@ import Col from "react-bootstrap/Col";
 export default function Post() {
 
     const navigate = useNavigate();
-    let {id} = useParams();
+    let {post_slug} = useParams();
 
     const [post, setPost] = useState({
         id: null,
@@ -23,11 +23,12 @@ export default function Post() {
     const [errors, setErrors] = useState(null);
     const [loading, setLoading] = useState(false);
 
-    if (id) {
+    if (post_slug) {
         useEffect(() => {
 
-            axiosClient.get(`/posts/${id}`)
+            axiosClient.get(`/posts/${post_slug}`)
                 .then(({data}) => {
+
                     setLoading(false)
                     setPost(data);
                 })
