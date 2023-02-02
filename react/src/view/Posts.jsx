@@ -45,19 +45,19 @@ export default function Posts(){
     return (
     <Container>
         <Col>
-            {/*{*/}
-            {/*    posts.map(p => (*/}
-            {/*    <Col key={p.id}>*/}
-            {/*        <h1><Link to={'/post/' + p.slug}>{p.title}</Link></h1>*/}
-            {/*        <h3>{p.category_name}</h3>*/}
-            {/*        /!*<div>{p.excerpt}</div>*!/*/}
+            {
+                posts.map(p => (
+                <Col key={p.id}>
+                    <h1><Link to={'/post/' + p.slug}>{p.title}</Link></h1>
+                    <h3>{p.category_name}</h3>
+                    {/*<div>{p.excerpt}</div>*/}
 
-            {/*            /!*<Link className="btn-edit" to={'/user/' + p.id}>Edit</Link>*!/*/}
-            {/*            &nbsp;*/}
-            {/*            /!*<button className="btn-delete" onClick={ev => onDeleteClick(p)}>Delete</button>*!/*/}
+                        {/*<Link className="btn-edit" to={'/user/' + p.id}>Edit</Link>*/}
+                        &nbsp;
+                        {/*<button className="btn-delete" onClick={ev => onDeleteClick(p)}>Delete</button>*/}
 
-            {/*    </Col>*/}
-            {/*))}*/}
+                </Col>
+            ))}
         </Col>
     </Container>
     )

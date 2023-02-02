@@ -19,7 +19,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        clock(request());
+
         return CategoryResource::collection(Category::all());
     }
 
@@ -30,7 +30,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -48,15 +48,17 @@ class CategoryController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Category  $category
-     * @return PostResource
+     * @return CategoryResource
      */
     public function show(Category $category)
     {
-
-//        return CategoryResource::collection($category);
         clock($category);
+//        return CategoryResource::collection($category);
+//        clock($this->name);
 //        return new PostResource($category->post);
         return response(['messgae' => 'test']);
+//        return new CategoryResource($category);
+
     }
 
     /**

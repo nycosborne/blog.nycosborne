@@ -31,7 +31,7 @@ export default function Categories(){
                 {
                     categories.map(c => (
                         <Col key={c.id}>
-                            <h1><Link to={'/posts/categories/' + c.slug}>{c.category_name}</Link></h1>
+                            <h1><Link to={'/categories/' + c.id}>{c.category_name}</Link></h1>
                             <h3>{c.category_name}</h3>
                             {/*<div>{p.excerpt}</div>*/}
 
