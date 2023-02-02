@@ -27,10 +27,10 @@ Route::middleware('auth:sanctum')->group(function () {
         'post' => 'slug',
     ]);
 //    Route::get('/categories/{categories}', [CategoryController::class, 'show']);
-    Route::apiResource('/categories', CategoryController::class);
-//    Route::apiResource('/categories', CategoryController::class)->scoped([
-//        'categories' => 'slug',
-//    ]);
+//    Route::apiResource('/categories', CategoryController::class);
+    Route::apiResource('/categories', CategoryController::class)->scoped([
+        'category' => 'slug',
+    ]);
 //    Route::get('/posts/categories', [CategoryController::class]);
 });
 

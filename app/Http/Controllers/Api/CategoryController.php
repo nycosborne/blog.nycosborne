@@ -52,12 +52,9 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        clock($category);
-//        return CategoryResource::collection($category);
-//        clock($this->name);
-//        return new PostResource($category->post);
-        return response(['messgae' => 'test']);
-//        return new CategoryResource($category);
+        clock($category->post);
+
+        return  PostResource::collection($category->post);
 
     }
 
