@@ -6,8 +6,10 @@ body {
     sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background: #2E3532!important;
-    padding-top: 55px ;
+    /*background: #212529!important;*/
+    /*background: #2d3748!important;*/
+    background: #1a202c!important;
+    color: #7f8ea3;
 }
 
 

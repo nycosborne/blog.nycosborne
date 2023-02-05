@@ -25,12 +25,12 @@ function MasterLayout() {
     return (
         <div>
             <NavBar/>
-            <Container fluid>
-                <Row>
-                    <Col>
-                        <Outlet/>
-                    </Col>
-                </Row>
+            <Container>
+                {/*<Row>*/}
+                {/*    <Col>*/}
+                <Outlet/>
+                {/*    </Col>*/}
+                {/*</Row>*/}
             </Container>
         </div>
 

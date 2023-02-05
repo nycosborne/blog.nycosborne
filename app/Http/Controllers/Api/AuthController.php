@@ -23,6 +23,7 @@ class AuthController extends Controller
         /** @var \App\Models\User $user */
         $user = Auth::user();
         $token = $user->createToken('main')->plainTextToken;
+        // Todo Maybe for User Admin restriction I can add a is_admin col to the users table ($user->is_admin)
         return response(compact('user', 'token'));
 
     }
@@ -34,7 +35,7 @@ class AuthController extends Controller
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+            'password' => $data['password'],
         ]);
 
         $token = $user->createToken('main')->plainTextToken;

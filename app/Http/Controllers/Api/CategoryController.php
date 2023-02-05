@@ -52,10 +52,8 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        clock($category->post);
 
         return  PostResource::collection($category->post);
-
     }
 
     /**

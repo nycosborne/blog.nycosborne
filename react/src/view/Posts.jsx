@@ -7,14 +7,20 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import {forEach} from "react-bootstrap/ElementChildren";
 
-export default function Posts(){
+export default function Posts() {
 
     const [posts, setPosts] = useState([])
     const [loading, setLoading] = useState(false)
     let {cat_slug} = useParams();
 
+    const styles = {
+        col: {
+            display: 'flex',
+            justifyContent: 'center'
+        }
+    }
 
-    if(!cat_slug) {
+    if (!cat_slug) {
         useEffect(() => {
             setLoading(true);
             axiosClient.get('/posts')
@@ -26,7 +32,7 @@ export default function Posts(){
                 setLoading(false)
             })
         }, [])
-    }else {
+    } else {
 
         useEffect(() => {
             setLoading(true);
@@ -40,25 +46,23 @@ export default function Posts(){
             })
         }, [])
 
-
     }
+
     return (
-    <Container>
-        <Col>
+        <di>
             {
                 posts.map(p => (
-                <Col key={p.id}>
-                    <h1><Link to={'/post/' + p.slug}>{p.title}</Link></h1>
-                    <h3>{p.category_name}</h3>
-                    {/*<div>{p.excerpt}</div>*/}
+                    <Col style={styles.col} key={p.id}>
+                        <h1><Link to={'/post/' + p.slug}>{p.title}</Link></h1>
+                        <div>{p.excerpt}</div>
+                        {/*<h3>{p.category_name}</h3>*/}
 
                         {/*<Link className="btn-edit" to={'/user/' + p.id}>Edit</Link>*/}
                         &nbsp;
                         {/*<button className="btn-delete" onClick={ev => onDeleteClick(p)}>Delete</button>*/}
 
-                </Col>
-            ))}
-        </Col>
-    </Container>
+                    </Col>
+                ))}
+        </di>
     )
 }

@@ -26,15 +26,15 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('/posts', PostController::class)->scoped([
         'post' => 'slug',
     ]);
-//    Route::get('/categories/{categories}', [CategoryController::class, 'show']);
-//    Route::apiResource('/categories', CategoryController::class);
+
     Route::apiResource('/categories', CategoryController::class)->scoped([
         'category' => 'slug',
     ]);
-//    Route::get('/posts/categories', [CategoryController::class]);
 });
 
-
+//Route::apiResource('/categories', CategoryController::class)->scoped([
+//    'category' => 'slug',
+//]);
 
 Route::post('/signup', [AuthController::class, 'signup']);
 Route::post('/login', [AuthController::class, 'login']);

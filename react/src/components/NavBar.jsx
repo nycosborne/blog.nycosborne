@@ -13,8 +13,15 @@ function NavBar() {
 
     const styles = {
         container: {
-            backgroundColor: '#987D7C',
-            overflowX: '100%',
+            borderBottomStyle: 'solid',
+            borderBottomWidth: '1px',
+        },
+        navBar: {
+            // backgroundColor: '#987D7C',
+            // overflowX: '100%',
+            color: '#7f8ea3',
+            // color: '#7f8ea3',
+
         }
 
     }
@@ -22,7 +29,7 @@ function NavBar() {
     const onLogout = (ev) => {
         ev.preventDefault();
         axiosClient.post('/logout')
-            .then(()=>{
+            .then(() => {
                 setUser({});
                 setToken(null);
             })
@@ -30,28 +37,22 @@ function NavBar() {
     }
 
     return (
-        <Navbar style={styles.container} expand="xxl'" fixed={"top"}>
-            <Container>
-                <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
-                <Nav.Link href="#" onClick={onLogout}> {user.name} Log Out</Nav.Link>
-                {/*<Navbar.Toggle aria-controls="basic-navbar-nav" />*/}
-                {/*<Navbar.Collapse id="basic-navbar-nav">*/}
-                {/*    <Nav className="me-auto">*/}
-                {/*        <Nav.Link href="#home">Home</Nav.Link>*/}
-                {/*        <Nav.Link href="#link">Link</Nav.Link>*/}
-                {/*        <NavDropdown title="Dropdown" id="basic-nav-dropdown">*/}
-                {/*            <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>*/}
-                {/*            <NavDropdown.Item href="#action/3.2">*/}
-                {/*                Another action*/}
-                {/*            </NavDropdown.Item>*/}
-                {/*            <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>*/}
-                {/*            <NavDropdown.Divider />*/}
-                {/*            <NavDropdown.Item href="#action/3.4">*/}
-                {/*                Separated link*/}
-                {/*            </NavDropdown.Item>*/}
-                {/*        </NavDropdown>*/}
-                {/*    </Nav>*/}
-                {/*</Navbar.Collapse>*/}
+        <Navbar style={styles.navBar}>
+            <Container style={styles.container}>
+                <Navbar.Brand style={{color: '#fff'}} href="/">nycosborne's web_Log </Navbar.Brand>
+
+
+                <Nav className="me-auto">
+                    <Nav.Link style={{color: '#fff'}} href="#link">Link</Nav.Link>
+                    <Nav.Link style={{color: '#fff'}} href="#home">Home</Nav.Link>
+                    {/*todo:Need to hide this behind admin wall*/}
+                    {/*<Nav.Link href="#" onClick={onLogout}> {user.name} Log Out</Nav.Link>*/}
+
+                </Nav>
+                <Nav className="justify-content-end">
+                    <Nav.Link style={{color: '#fff'}} href="https://github.com/nycosborne">GitHub</Nav.Link>
+                    <Nav.Link style={{color: '#fff'}} href="https://twitter.com/nycosborne">Twitter</Nav.Link>
+                </Nav>
             </Container>
         </Navbar>
     );
