@@ -2,7 +2,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import axiosClient from "../axios-client.js";
 import {useStateContext} from "../context/ContextProvider.jsx";
-import {Button, Container, Dropdown, FloatingLabel, Form} from "react-bootstrap";
+import {Button, Card, Container, Dropdown, FloatingLabel, Form, Image} from "react-bootstrap";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
@@ -12,12 +12,7 @@ export default function Post() {
     let {post_slug} = useParams();
 
     const [post, setPost] = useState({
-        id: null,
-        title: '',
-        content: '',
-        excerpt: '',
-        created: null,
-        slug: ''
+        id: null, title: '', content: '', excerpt: '', created: null, slug: ''
     })
 
     const [errors, setErrors] = useState(null);
@@ -38,15 +33,32 @@ export default function Post() {
         }, [])
     }
 
-    return (
-        <div>
-            <Container>
-                <Row>
+    return (<div>
+        <Container>
+
+            <Col className={'justify-content-around'}>
+                <Row md="auto" className={'justify-content-around'}>
                     <Col>
-            {post.id && <h1>{post.title} {post.title}</h1>}
+                        <Row style={{paddingTop: '100px'}}>
+                            <Col>
+                                <h1 style={{color: '#fff'}}>{post.title}</h1>
+                                <h5 style={{color: '#fff'}}>{post.created}</h5>
+                            </Col>
+                        </Row>
+                        <Row md="auto" className={'justify-content-around'}>
+                            <Card.Img style={{maxWidth: '400px', paddingTop: '100px', paddingBottom: '100px'}}
+                                      src="/images/headshoot_300X300.gif"/>
+                        </Row>
+
                     </Col>
                 </Row>
-            </Container>
-        </div>
-    )
+                <Row md="auto" className={'justify-content-around'}>
+                    <Container style={{maxWidth: '1000px'}}>
+                        <p style={{color: '#fff'}}>{post.content}</p>
+                    </Container>
+                </Row>
+            </Col>
+            {/*</Col>*/}
+        </Container>
+    </div>)
 }

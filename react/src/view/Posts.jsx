@@ -53,7 +53,9 @@ export default function Posts() {
                 {isHome &&
                     <Row className={'justify-content-around'}>
                         <Row style={{maxWidth: '1000px', paddingTop: '150px', borderRadius: '50%'}}>
-                            <Col><Card.Img style={{borderRadius: '50%'}} src="/images/headshoot_300X300.gif"/></Col>
+                            <Col>
+                                <Card.Img style={{borderRadius: '50%'}} src="/images/headshoot_300X300.gif"/>
+                            </Col>
                             <Col xs={10} style={{fontSize: '1.25rem'}}>
                                     <p>Hello, I'm Dan from New York 🗽</p>
                                     <p>I'm a full stack engineer passionate about building usefully thing with clean code!</p>

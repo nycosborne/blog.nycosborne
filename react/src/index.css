@@ -17,11 +17,12 @@ a {
     color: #f0666b;
 }
 
-.card-body{
-    text-decoration: none!important;
+.card-body {
+    text-decoration: none !important;
 }
-.card-title{
-    text-decoration: none!important;
+
+.card-title {
+    text-decoration: none !important;
 }
 
 .card {
