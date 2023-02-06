@@ -8,10 +8,37 @@ body {
     -moz-osx-font-smoothing: grayscale;
     /*background: #212529!important;*/
     /*background: #2d3748!important;*/
-    background: #1a202c!important;
-    color: #7f8ea3;
+    background: #1a202c !important;
+    color: #ffffff;
 }
 
+
+a {
+    color: #f0666b;
+}
+
+.card-body{
+    text-decoration: none!important;
+}
+.card-title{
+    text-decoration: none!important;
+}
+
+.card {
+    width: 18rem;
+    margin: 15px;
+    padding: 20px;
+    background: #1a202c !important;
+    border: none !important;
+}
+
+.card > img {
+    border-radius: 15px;
+}
+
+.card:hover {
+    border: 2px solid #f0666b !important;
+}
 
 /*Login and SignUp Form*/
 .login-signup-form {
@@ -25,7 +52,7 @@ body {
 
 .animated {
     -webkit-animation-duration: 0.3s;
-    animation-duration: 0.3s;
+    animation-duration: 3.3s;
     -webkit-animation-fill-mode: both;
     animation-fill-mode: both;
 }
@@ -34,17 +61,3 @@ body {
     -webkit-animation-name: fadeInDown;
     animation-name: fadeInDown;
 }
-
-@keyframes fadeInDown {
-    0% {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-
-

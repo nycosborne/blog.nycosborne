@@ -1,9 +1,9 @@
 import {useEffect, useState} from "react";
 import axiosClient from "../axios-client.js";
 import {Link, useParams} from "react-router-dom";
-import {useStateContext} from "../context/ContextProvider.jsx";
+import {  useLocation } from 'react-router-dom';
 import {Container} from "react-bootstrap";
-import Col from "react-bootstrap/Col";
+import {Col, Card} from "react-bootstrap";
 import Row from "react-bootstrap/Row";
 import {forEach} from "react-bootstrap/ElementChildren";
 
@@ -11,14 +11,9 @@ export default function Posts() {
 
     const [posts, setPosts] = useState([])
     const [loading, setLoading] = useState(false)
+    const [isHome, setHome] = useState(false)
+    const location = useLocation()
     let {cat_slug} = useParams();
-
-    const styles = {
-        col: {
-            display: 'flex',
-            justifyContent: 'center'
-        }
-    }
 
     if (!cat_slug) {
         useEffect(() => {
@@ -31,6 +26,11 @@ export default function Posts() {
                 }).catch(() => {
                 setLoading(false)
             })
+
+            if(location.pathname === '/'){
+                setHome(true);
+            }
+
         }, [])
     } else {
 
@@ -49,20 +49,28 @@ export default function Posts() {
     }
 
     return (
-        <div>
+        <Col style={{textDecoration: 'none', color: '#fff'}}>
+            {isHome &&
+            <div>
+
+            </div>
+            }
+
+        <Row className={'justify-content-around'}>
             {
                 posts.map(p => (
-                    <Col style={styles.col} key={p.id}>
-                        <h1><Link to={'/post/' + p.slug}>{p.title}</Link></h1>
-                        <div>{p.excerpt}</div>
-                        {/*<h3>{p.category_name}</h3>*/}
-
-                        {/*<Link className="btn-edit" to={'/user/' + p.id}>Edit</Link>*/}
-                        &nbsp;
-                        {/*<button className="btn-delete" onClick={ev => onDeleteClick(p)}>Delete</button>*/}
-
+                    <Col md="auto" key={p.id}>
+                        <a style={{textDecoration: 'none', color: '#fff'}} href={'/post/' + p.slug}>
+                            <Card>
+                                <Card.Img variant="top" src="/images/headshot.gif"/>
+                                <Card.Body>
+                                    <Card.Title >{p.title}</Card.Title>
+                                </Card.Body>
+                            </Card>
+                        </a>
                     </Col>
                 ))}
-        </div>
+        </Row>
+        </Col>
     )
 }
