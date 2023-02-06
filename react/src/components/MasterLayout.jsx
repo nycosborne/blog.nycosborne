@@ -25,7 +25,7 @@ function MasterLayout() {
     return (
         <div>
             <NavBar/>
-            <Container>
+            <Container variant="dark">
                 {/*<Row>*/}
                 {/*    <Col>*/}
                 <Outlet/>

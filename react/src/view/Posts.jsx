@@ -49,7 +49,7 @@ export default function Posts() {
     }
 
     return (
-        <di>
+        <div>
             {
                 posts.map(p => (
                     <Col style={styles.col} key={p.id}>
@@ -63,6 +63,6 @@ export default function Posts() {
 
                     </Col>
                 ))}
-        </di>
+        </div>
     )
 }

@@ -2,30 +2,42 @@ import {createContext, useContext, useState} from "react";
 
 const StateContext = createContext({
     user: null,
-    setUser: () => {},
+    setUser: () => {
+    },
     token: null,
-    setToken: () => {},
+    setToken: () => {
+    },
     // postId: null,
     // setPostId: () => {},
 });
 
 export const ContextProvider = ({children}) => {
 
-    const [user, setUser ] = useState({});
+    const [user, _setUser] = useState({});
+    const [isAdmin, setIsAdmin] = useState(false);
+    const [token, _setToken] = useState(localStorage.getItem('ACCESS_TOKEN'));
     // const [postId, setPostId ] = useState({});
-    const [token, _setToken ] = useState(localStorage.getItem('ACCESS_TOKEN'));
-    // const [token, _setToken ] = useState(false);
 
     const setToken = (token) => {
         _setToken(token);
-        if (token){
+        if (token) {
             localStorage.setItem('ACCESS_TOKEN', token);
         } else {
             localStorage.removeItem('ACCESS_TOKEN');
         }
     }
 
-    return(
+    const setUser = (user) => {
+        _setUser(user)
+        if (user.is_admin === 0) {
+            setIsAdmin(false);
+        } else {
+            setIsAdmin(true);
+        }
+    }
+
+
+    return (
         <StateContext.Provider value={{
             user,
             setUser,
@@ -33,6 +45,7 @@ export const ContextProvider = ({children}) => {
             setToken,
             // postId,
             // setPostId
+            isAdmin
         }}>
             {children}
         </StateContext.Provider>
