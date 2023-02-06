@@ -1,11 +1,10 @@
 import {useEffect, useState} from "react";
 import axiosClient from "../axios-client.js";
 import {Link, useParams} from "react-router-dom";
-import {  useLocation } from 'react-router-dom';
+import {useLocation} from 'react-router-dom';
 import {Container} from "react-bootstrap";
 import {Col, Card} from "react-bootstrap";
 import Row from "react-bootstrap/Row";
-import {forEach} from "react-bootstrap/ElementChildren";
 
 export default function Posts() {
 
@@ -27,7 +26,7 @@ export default function Posts() {
                 setLoading(false)
             })
 
-            if(location.pathname === '/'){
+            if (location.pathname === '/') {
                 setHome(true);
             }
 
@@ -49,28 +48,40 @@ export default function Posts() {
     }
 
     return (
-        <Col style={{textDecoration: 'none', color: '#fff'}}>
-            {isHome &&
-            <div>
-
-            </div>
-            }
-
-        <Row className={'justify-content-around'}>
-            {
-                posts.map(p => (
-                    <Col md="auto" key={p.id}>
-                        <a style={{textDecoration: 'none', color: '#fff'}} href={'/post/' + p.slug}>
-                            <Card>
-                                <Card.Img variant="top" src="/images/headshot.gif"/>
-                                <Card.Body>
-                                    <Card.Title >{p.title}</Card.Title>
-                                </Card.Body>
-                            </Card>
-                        </a>
-                    </Col>
-                ))}
-        </Row>
-        </Col>
+        <Container>
+            <Col style={{textDecoration: 'none', color: '#fff'}}>
+                {isHome &&
+                    <Row className={'justify-content-around'}>
+                        <Row style={{maxWidth: '1000px', paddingTop: '150px', borderRadius: '50%'}}>
+                            <Col><Card.Img style={{borderRadius: '50%'}} src="/images/headshoot_300X300.gif"/></Col>
+                            <Col xs={10} style={{fontSize: '1.25rem'}}>
+                                    <p>Hello, I'm Dan from New York 🗽</p>
+                                    <p>I'm a full stack engineer passionate about building usefully thing with clean code!</p>
+                                    <p>Been building and maintaining monolithic and
+                                        serverless enterprise applications for 5 plus years. Strong knowledge of PHP, Laravel, Node.js, Java,
+                                        relational and NoSQL databases. AWS certification.</p>
+                                    <p>Happiest ❤️ when working closely with others.</p>
+                             </Col>
+                        </Row>
+                    </Row>
+                }
+                <Row className={'justify-content-around'} >
+                    {
+                        posts.map(p => (
+                            <Col md="auto" key={p.id}>
+                                <a style={{textDecoration: 'none', color: '#fff'}} href={'/post/' + p.slug}>
+                                    <Card>
+                                        <Card.Img variant="top" src="/images/headshot.gif"/>
+                                        <Card.Body>
+                                            <Card.Text style={{color: '#ffffff8c'}}>{p.created}</Card.Text>
+                                            <Card.Title>{p.title}</Card.Title>
+                                        </Card.Body>
+                                    </Card>
+                                </a>
+                            </Col>
+                        ))}
+                </Row>
+            </Col>
+        </Container>
     )
 }

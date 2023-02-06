@@ -23,7 +23,7 @@ class PostResource extends JsonResource
             'title' => $this->title,
             'excerpt' => $this->excerpt,
             'content' => $this->content,
-            'created' => $this->created_at->format('Y-m-d H:i:s'),
+            'created' => $this->created_at->format('M d Y'),
             'slug' => $this->slug,
             'category_name' => $this->category->name
         ];
