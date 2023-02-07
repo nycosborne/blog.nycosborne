@@ -15,11 +15,12 @@ export default function PostForm() {
         excerpt: '',
         category_id: null,
         image: null
-    })
-    const [image, setImage] = useState({
-        image: null
-    })
+    });
 
+    const [file, setFile] = useState({
+        title: 'here title',
+        file: null
+    });
 
     const [errors, setErrors] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -35,7 +36,7 @@ export default function PostForm() {
                 .catch(() => {
                     setLoading(false)
                 })
-        }, [])
+        }, []);
     }
 
 
@@ -60,7 +61,11 @@ export default function PostForm() {
             const formData = new FormData();
 
             // Append file to the formData object here
-            formData.append("image", image);
+            formData.append("title", post['title']);
+            formData.append("content", post['content']);
+            formData.append("excerpt", post['excerpt']);
+            formData.append("category_id", post['category_id']);
+            formData.append("image", post['image']);
 
             axiosClient.post('/posts', formData )
 
@@ -78,9 +83,8 @@ export default function PostForm() {
     }
 
     const fileUpload = (ev) =>{
-        setPost({...post, image: ev.target.files[0]});
-        // setFile()
 
+        setPost({...post, image: ev.target.files[0]});
     }
 
     return (
