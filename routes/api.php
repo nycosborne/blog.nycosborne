@@ -24,23 +24,18 @@ Route::middleware('auth:sanctum')->group(function () {
         return $request->user();
     });
 
-    Route::apiResource('/posts', PostController::class)->scoped([
-        'post' => 'slug',
-    ]);
-
-    Route::apiResource('/categories', CategoryController::class)->scoped([
-        'category' => 'slug',
-    ]);
 });
+Route::apiResource('/posts', PostController::class)->scoped([
+    'post' => 'slug',
+]);
 
-//Route::apiResource('/categories', CategoryController::class)->scoped([
-//    'category' => 'slug',
-//]);
+Route::apiResource('/categories', CategoryController::class)->scoped([
+    'category' => 'slug',
+]);
 
 Route::post('/signup', [AuthController::class, 'signup']);
 Route::post('/login', [AuthController::class, 'login']);
 
-
-
-Route::get('/file-upload', [FileController::class, 'index'])->name('file.upload');
-Route::post('/file-upload', [FileController::class, 'store'])->name('file.upload.store');
+//
+//Route::get('/file-upload', [FileController::class, 'index'])->name('file.upload');
+//Route::post('/file-upload', [FileController::class, 'store'])->name('file.upload.store');

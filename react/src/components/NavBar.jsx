@@ -33,9 +33,7 @@ function NavBar() {
                 setUser({});
                 setToken(null);
             })
-
     }
-
 
     return (
         <Navbar variant="dark" style={styles.navBar}>
@@ -46,8 +44,8 @@ function NavBar() {
                     <Nav.Link href="/categories">categories</Nav.Link>
                 </Nav>
                 <Nav className="justify-content-end">
-                    <Nav.Link href="https://github.com/nycosborne">GitHub</Nav.Link>
-                    <Nav.Link href="https://twitter.com/nycosborne">Twitter</Nav.Link>
+                    <Nav.Link target="_blank" href="https://github.com/nycosborne">GitHub</Nav.Link>
+                    <Nav.Link target="_blank" href="https://twitter.com/nycosborne">Twitter</Nav.Link>
 
                 {
                     isAdmin &&

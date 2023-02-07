@@ -24,7 +24,6 @@ class CreatePost extends FormRequest
     public function rules()
     {
 
-        clock($this->title);
         return [
             'title' => 'string',
             'content' => 'string',

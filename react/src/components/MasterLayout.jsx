@@ -18,10 +18,6 @@ function MasterLayout() {
             })
     }, [])
 
-    if (!token) {
-        return <Navigate to='/login'/>
-    }
-
     return (
         <div>
             <NavBar/>

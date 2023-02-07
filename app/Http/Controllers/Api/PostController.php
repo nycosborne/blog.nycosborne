@@ -48,19 +48,25 @@ class PostController extends Controller
      * @param CreatePost $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(CreatePost $request)
     {
 
+        $data = $request->validated();
 
-            if ($request->file('image')) {
-            return "It's a File";
-        }else{
+        $fileName = time() . '.' . $request->image->extension();
+        $request->image->move(public_path('uploads'), $fileName);
 
-            return "No! It's not a File";
-        }
+//        Post::create($data);
+        Post::create([
+            'excerpt' => $request->excerpt,
+            //todo would like to determin why my liter hates this $request->content
+            'content' => $request->content,
+            'category_id' => $request->category_id,
+            'title' => $request->title,
+            'slug' => $request->slug,
+            'image' => $fileName
+        ]);
 
-//        $data = $request->validated();
-        Post::create($data);
         return response([
             'post' => json_encode($data)
         ]);
@@ -69,7 +75,7 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Post  $post
+     * @param \App\Models\Post $post
      * @return \Illuminate\Http\Response
      */
     public function show(Post $post)
@@ -80,7 +86,7 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Post  $post
+     * @param \App\Models\Post $post
      * @return \Illuminate\Http\Response
      */
     public function edit(Post $post)
@@ -91,8 +97,8 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Post  $post
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Post $post
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Post $post)
@@ -103,7 +109,7 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Post  $post
+     * @param \App\Models\Post $post
      * @return \Illuminate\Http\Response
      */
     public function destroy(Post $post)

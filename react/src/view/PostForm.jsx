@@ -14,6 +14,7 @@ export default function PostForm() {
         content: '',
         excerpt: '',
         category_id: null,
+        slug: '',
         image: null
     });
 
@@ -65,6 +66,7 @@ export default function PostForm() {
             formData.append("content", post['content']);
             formData.append("excerpt", post['excerpt']);
             formData.append("category_id", post['category_id']);
+            formData.append("slug", post['category_id']);
             formData.append("image", post['image']);
 
             axiosClient.post('/posts', formData )

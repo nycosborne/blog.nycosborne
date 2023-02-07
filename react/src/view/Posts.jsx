@@ -73,6 +73,7 @@ export default function Posts() {
                             <Col md="auto" key={p.id}>
                                 <a style={{textDecoration: 'none', color: '#fff'}} href={'/post/' + p.slug}>
                                     <Card>
+                                        {/*<Card.Img variant="top" src="http://localhost:8000/uploads/1675789169.gif"/>*/}
                                         <Card.Img variant="top" src="/images/headshot.gif"/>
                                         <Card.Body>
                                             <Card.Text style={{color: '#ffffff8c'}}>{p.created}</Card.Text>
