@@ -13,7 +13,11 @@ export default function PostForm() {
         title: '',
         content: '',
         excerpt: '',
-        category_id: null
+        category_id: null,
+        image: null
+    })
+    const [image, setImage] = useState({
+        image: null
     })
 
 
@@ -36,7 +40,6 @@ export default function PostForm() {
 
 
     function onSubmit(ev) {
-        console.log(post);
         ev.preventDefault();
 
         if (post.id) {
@@ -52,9 +55,16 @@ export default function PostForm() {
                     }
                 })
         } else {
-            axiosClient.post('/posts', post)
 
-            console.log(post);
+            // Create a FormData object
+            const formData = new FormData();
+
+            // Append file to the formData object here
+            formData.append("image", image);
+
+            axiosClient.post('/posts', formData )
+
+            console.log(formData);
                 // .then(() => {
                 //     // navigate('/users')
                 // })
@@ -65,6 +75,12 @@ export default function PostForm() {
                 //     }
                 // })
         }
+    }
+
+    const fileUpload = (ev) =>{
+        setPost({...post, image: ev.target.files[0]});
+        // setFile()
+
     }
 
     return (
@@ -117,6 +133,16 @@ export default function PostForm() {
                             placeholder="Leave a comment here"
                             style={{height: '200px'}}/>
                     </FloatingLabel>
+
+
+                </Form.Group>
+
+                <Form.Group controlId="formFile" className="mb-3">
+                    <Form.Label>Upload Image</Form.Label>
+                    <Form.Control
+                        type="file"
+                        onChange={ev => fileUpload(ev)}
+                    />
                 </Form.Group>
 {/*todo make the drop down option a dynamics DB pull*/}
                 <Dropdown>

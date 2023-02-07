@@ -48,11 +48,18 @@ class PostController extends Controller
      * @param CreatePost $request
      * @return Response
      */
-    public function store(CreatePost $request)
+    public function store(Request $request)
     {
 
-        $data = $request->validated();
 
+            if ($request->file('image')) {
+            return "It's a File";
+        }else{
+
+            return "No! It's not a File";
+        }
+
+//        $data = $request->validated();
         Post::create($data);
         return response([
             'post' => json_encode($data)

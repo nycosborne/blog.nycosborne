@@ -23,12 +23,15 @@ class CreatePost extends FormRequest
      */
     public function rules()
     {
+
+        clock($this->title);
         return [
             'title' => 'string',
             'content' => 'string',
             'excerpt' => 'string',
             'slug' => 'string',
-            'category_id' => 'integer'
+            'category_id' => 'integer',
+            'image' => 'image'
         ];
     }
 }

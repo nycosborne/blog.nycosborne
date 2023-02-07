@@ -22,7 +22,8 @@ class Post extends Model
         'content',
         'excerpt',
         'category_id',
-        'slug'
+        'slug',
+        'img'
     ];
 
     use HasFactory;
