@@ -12,11 +12,6 @@ body {
     color: #ffffff;
 }
 
-
-a {
-    color: #f0666b;
-}
-
 .card-body {
     text-decoration: none !important;
 }
@@ -39,6 +34,16 @@ a {
 
 .card:hover {
     border: 2px solid #f0666b !important;
+}
+
+.blog_content > p > a  {
+    color: #f0666b!important;
+    text-decoration: none !important;
+}
+
+.blog_content > p{
+    font-size: 1.25rem;
+    color: #cbd5e0!important;
 }
 
 /*Login and SignUp Form*/

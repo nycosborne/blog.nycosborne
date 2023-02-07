@@ -33,6 +33,8 @@ export default function Post() {
         }, [])
     }
 
+    console.log(post.content);
+
     return (<div>
         <Container>
 
@@ -46,19 +48,17 @@ export default function Post() {
                             </Col>
                         </Row>
                         <Row md="auto" className={'justify-content-around'}>
-                            <Card.Img style={{maxWidth: '400px', paddingTop: '100px', paddingBottom: '100px'}}
+                            <Card.Img style={{maxWidth: '400px', paddingTop: '50px', paddingBottom: '40px'}}
                                       src="/images/headshoot_300X300.gif"/>
                         </Row>
-
                     </Col>
                 </Row>
                 <Row md="auto" className={'justify-content-around'}>
-                    <Container style={{maxWidth: '1000px'}}>
-                        <p style={{color: '#fff'}}>{post.content}</p>
+                    <Container  style={{maxWidth: '1000px', color: '#fff'}}>
+                        <div className={'blog_content'} dangerouslySetInnerHTML={{__html: post.content}} ></div>
                     </Container>
                 </Row>
             </Col>
-            {/*</Col>*/}
         </Container>
     </div>)
 }
