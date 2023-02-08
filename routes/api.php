@@ -36,6 +36,3 @@ Route::apiResource('/categories', CategoryController::class)->scoped([
 Route::post('/signup', [AuthController::class, 'signup']);
 Route::post('/login', [AuthController::class, 'login']);
 
-//
-//Route::get('/file-upload', [FileController::class, 'index'])->name('file.upload');
-//Route::post('/file-upload', [FileController::class, 'store'])->name('file.upload.store');
