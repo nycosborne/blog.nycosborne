@@ -56,10 +56,10 @@ class PostController extends Controller
         $fileName = time() . '.' . $request->image->extension();
         $request->image->move(public_path('uploads'), $fileName);
 
-//        Post::create($data);
         Post::create([
             'excerpt' => $request->excerpt,
             //todo would like to determin why my liter hates this $request->content
+            // this might just be a thing, or maybe I need a plugin
             'content' => $request->content,
             'category_id' => $request->category_id,
             'title' => $request->title,
