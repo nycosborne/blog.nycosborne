@@ -8,27 +8,21 @@ import Col from "react-bootstrap/Col";
 
 export default function Post() {
 
-    const navigate = useNavigate();
     let {post_slug} = useParams();
 
     const [post, setPost] = useState({
         id: null, title: '', content: '', excerpt: '', created: null, slug: ''
     })
 
-    const [errors, setErrors] = useState(null);
-    const [loading, setLoading] = useState(false);
-
     if (post_slug) {
         useEffect(() => {
-
             axiosClient.get(`/posts/${post_slug}`)
                 .then(({data}) => {
 
-                    setLoading(false)
                     setPost(data);
                 })
                 .catch(() => {
-                    setLoading(false)
+
                 })
         }, [])
     }
@@ -47,12 +41,12 @@ export default function Post() {
                                 <h5 style={{color: '#fff'}}>{post.created}</h5>
                             </Col>
                         </Row>
-                        <Row md="auto" className={'justify-content-around'}>
-                            <Card.Img style={{maxWidth: '400px', paddingTop: '50px', paddingBottom: '40px'}}
-                                      src="/images/headshoot_300X300.gif"/>
+                        <Row md="auto" className={'justify-content-around'}>box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+                            <Card.Img style={{maxWidth: '400px', marginTop: '50px', marginBottom: '40px', padding: '0px', boxShadow: 'rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px'}} src="/images/headshoot_300X300.gif"/>
                         </Row>
                     </Col>
                 </Row>
+
                 <Row md="auto" className={'justify-content-around'}>
                     <Container  style={{maxWidth: '1000px', color: '#fff'}}>
                         <div className={'blog_content'} dangerouslySetInnerHTML={{__html: post.content}} ></div>

@@ -20,16 +20,8 @@ class PostController extends Controller
      */
     public function index()
     {
-//        return PostResource::collection(Post::query()->orderBy('id', 'desc')->paginate(10));
+
         return PostResource::collection(Post::all());
-//        return PostResource::collection(Post::with('category')->first());
-//clock(json_encode(Post::with('category')->get()));
-
-//        return response([
-//            Post::with('category')->get()
-//        ]);
-
-//        return new PostResource(Post::with('category')->get());
     }
 
     /**
@@ -58,7 +50,7 @@ class PostController extends Controller
 
         Post::create([
             'excerpt' => $request->excerpt,
-            //todo would like to determin why my liter hates this $request->content
+            //todo would like to determine why my liter hates this $request->content
             // this might just be a thing, or maybe I need a plugin
             'content' => $request->content,
             'category_id' => $request->category_id,
