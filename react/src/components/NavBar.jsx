@@ -21,9 +21,7 @@ function NavBar() {
             // overflowX: '100%',
             color: '#7f8ea3',
             // color: '#7f8ea3',
-
         }
-
     }
 
     const onLogout = (ev) => {
@@ -41,7 +39,8 @@ function NavBar() {
                 <Navbar.Brand href="/">nycosborne's web_Log </Navbar.Brand>
                 <Nav className="me-auto">
                     <Nav.Link href="/posts">all</Nav.Link>
-                    <Nav.Link href="/categories">categories</Nav.Link>
+                    {/*todo need to replace categories with tags lot-o back end*/}
+                    {/*<Nav.Link href="/categories">categories</Nav.Link>*/}
                 </Nav>
                 <Nav className="justify-content-end">
                     <Nav.Link target="_blank" href="https://github.com/nycosborne">GitHub</Nav.Link>
@@ -57,24 +56,6 @@ function NavBar() {
                 </Nav>
             </Container>
         </Navbar>
-
-        // <Navbar style={styles.navBar}>
-        //     <Container style={styles.container}>
-        //         <Navbar.Brand style={{color: '#fff'}} href="/">nycosborne's web_Log </Navbar.Brand>
-        //
-        //         <Nav className="me-auto">
-        //             <Nav.Link style={{color: '#fff'}} href="#link">Link</Nav.Link>
-        //             <Nav.Link style={{color: '#fff'}} href="#home">Home</Nav.Link>
-        //             {/*todo:Need to hide this behind admin wall*/}
-        //             {/*<Nav.Link href="#" onClick={onLogout}> {user.name} Log Out</Nav.Link>*/}
-        //
-        //         </Nav>
-        //         <Nav className="justify-content-end">
-        //             <Nav.Link style={{color: '#fff'}} href="https://github.com/nycosborne">GitHub</Nav.Link>
-        //             <Nav.Link style={{color: '#fff'}} href="https://twitter.com/nycosborne">Twitter</Nav.Link>
-        //         </Nav>
-        //     </Container>
-        // </Navbar>
     );
 }
 

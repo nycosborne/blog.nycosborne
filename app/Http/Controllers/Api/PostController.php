@@ -44,10 +44,12 @@ class PostController extends Controller
     {
 
         $data = $request->validated();
-
-        $fileName = time() . '.' . $request->image->extension();
-        $request->image->move(public_path('uploads'), $fileName);
-
+        $fileName = null;
+        if($request->image){
+            $fileName = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('uploads'), $fileName);
+        }
+clock($request->slug);
         Post::create([
             'excerpt' => $request->excerpt,
             //todo would like to determine why my liter hates this $request->content
