@@ -54,9 +54,13 @@ const router = createBrowserRouter([
                 element: <Dashboard/>
             },
             {
-                path: '/posts/new',
-                element: <PostForm/>
-            }
+                path: '/post/new',
+                element: <PostForm key={'createNew'}/>
+            },
+            {
+                path: '/post/edit/:post_slug',
+                element: <PostForm key={'createUpdate'}/>
+            },
         ]
 
     },

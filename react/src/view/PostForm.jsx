@@ -9,7 +9,8 @@ import { ReactSearchAutocomplete } from 'react-search-autocomplete'
 export default function PostForm() {
 
     const navigate = useNavigate();
-    let {id} = useParams();
+    let {post_slug} = useParams();
+
     const [post, setPost] = useState({
         id: null,
         title: '',
@@ -28,28 +29,26 @@ export default function PostForm() {
     const [errors, setErrors] = useState(null);
     const [loading, setLoading] = useState(false);
 
-    if (id) {
+
+    if (post_slug) {
         useEffect(() => {
-            setLoading(true)
-            axiosClient.get(`/posts/${id}`)
+            axiosClient.get(`/posts/${post_slug}`)
                 .then(({data}) => {
-                    setLoading(false)
-                    setPost(data)
+                    setPost(data);
                 })
                 .catch(() => {
-                    setLoading(false)
-                })
-        }, []);
-    }
 
+                })
+        }, [])
+    }
 
     function onSubmit(ev) {
         ev.preventDefault();
 
         if (post.id) {
-            axiosClient.put(`/posts/${post.id}`, post)
+            axiosClient.put(`/posts/${post.slug}`, post)
                 .then(() => {
-                    // console.log('this');
+                    console.log('this here');
                     // navigate('/posts');
                 })
                 .catch(err => {
@@ -67,18 +66,16 @@ export default function PostForm() {
             formData.append("title", post['title']);
             formData.append("content", post['content']);
             formData.append("excerpt", post['excerpt']);
-            formData.append("category_id", 1);
+            // formData.append("category_id", 1);
             formData.append("slug", post['slug']);
             if(post['image']) {
                 formData.append("image", post['image']);
             }
             axiosClient.post('/posts', formData )
+                .then(() => {
 
-            console.log('formData', post);
-                // .then(() => {
-                // todo this should redirect to the created or edited post
-                //     // navigate('/users')
-                // })
+                    // navigate(`/post/${post_slug}`)
+                })
                 // .catch(err => {
                 //     const response = err.response;
                 //     if (response && response.status === 422) {
@@ -90,7 +87,7 @@ export default function PostForm() {
 
     const fileUpload = (ev) =>{
 
-        setPost({...post, image: ev.target.files[0]});
+        // setPost({...post, image: ev.target.files[0]});
     }
 
     const movieItems = [

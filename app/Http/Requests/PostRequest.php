@@ -24,7 +24,12 @@ class PostRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'title' => 'string',
+            'content' => 'string',
+            'excerpt' => 'string',
+            'slug' => 'string',
+            'category_id' => 'integer',
+//            'image' => 'image'
         ];
     }
 }

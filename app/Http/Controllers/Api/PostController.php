@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreatePost;
+use App\Http\Requests\PostRequest;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
 use App\Models\User;
@@ -44,12 +45,12 @@ class PostController extends Controller
     {
 
         $data = $request->validated();
-        $fileName = null;
-        if($request->image){
-            $fileName = time() . '.' . $request->image->extension();
-            $request->image->move(public_path('uploads'), $fileName);
-        }
-clock($request->slug);
+//        $fileName = null;
+//        if($request->image){
+//            $fileName = time() . '.' . $request->image->extension();
+//            $request->image->move(public_path('uploads'), $fileName);
+//        }
+
         Post::create([
             'excerpt' => $request->excerpt,
             //todo would like to determine why my liter hates this $request->content
@@ -57,8 +58,9 @@ clock($request->slug);
             'content' => $request->content,
             'category_id' => $request->category_id,
             'title' => $request->title,
-            'slug' => $request->slug,
-            'image' => $fileName
+            // todo Might could build the slug dynamically from the blog title.
+            'slug' => $request->slug
+//            'image' => $fileName
         ]);
 
         return response([
@@ -91,13 +93,16 @@ clock($request->slug);
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Post $post
-     * @return \Illuminate\Http\Response
+     * @param PostRequest $request
+     * @param Post $post
+     * @return Response
      */
-    public function update(Request $request, Post $post)
+    public function update(PostRequest $request, Post $post)
     {
-        //
+
+        $data = $request->validated();
+        $post->update($data);
+
     }
 
     /**

@@ -30,7 +30,7 @@ class CreatePost extends FormRequest
             'excerpt' => 'string',
             'slug' => 'string',
             'category_id' => 'integer',
-            'image' => 'image'
+//            'image' => 'image'
         ];
     }
 }

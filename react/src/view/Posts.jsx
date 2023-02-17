@@ -44,7 +44,6 @@ export default function Posts() {
                 setLoading(false)
             })
         }, [])
-
     }
 
     return (
