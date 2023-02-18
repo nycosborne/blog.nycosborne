@@ -46,9 +46,9 @@ export default function PostForm() {
         ev.preventDefault();
 
         if (post.id) {
+
             axiosClient.put(`/posts/${post.slug}`, post)
                 .then(() => {
-                    console.log('this here');
                     navigate(`/post/${post.slug}`);
                 })
                 .catch(err => {
@@ -72,10 +72,10 @@ export default function PostForm() {
             axiosClient.post('/posts', formData )
                 .then(({data}) => {
                     console.log(data);
-                    // navigate(`/post/${post.slug}`);
-                    // navigate(`/post/${post_slug}`)
+                    navigate(`/post/${data.slug}`);
                 })
                 // .catch(err => {
+                // todo need to add error handling
                 //     const response = err.response;
                 //     if (response && response.status === 422) {
                 //         setErrors(response.data.errors)

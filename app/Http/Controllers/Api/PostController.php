@@ -8,6 +8,8 @@ use App\Http\Requests\PostRequest;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
 use App\Models\User;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use mysql_xdevapi\Collection;
@@ -51,7 +53,7 @@ class PostController extends Controller
 //            $request->image->move(public_path('uploads'), $fileName);
 //        }
 
-        Post::create([
+        $post = Post::create([
             'excerpt' => $request->excerpt,
             //todo would like to determine why my liter hates this $request->content
             // this might just be a thing, or maybe I need a plugin
@@ -63,7 +65,7 @@ class PostController extends Controller
         ]);
 
         return response([
-            'post' => json_encode($data)
+            'slug' => $post->slug
         ]);
     }
 
@@ -102,6 +104,9 @@ class PostController extends Controller
         $data = $request->validated();
         $post->update($data);
 
+        return response([
+            'post' => json_encode($data)
+        ]);
     }
 
     /**
