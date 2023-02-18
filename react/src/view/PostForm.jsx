@@ -49,7 +49,7 @@ export default function PostForm() {
             axiosClient.put(`/posts/${post.slug}`, post)
                 .then(() => {
                     console.log('this here');
-                    // navigate('/posts');
+                    navigate(`/post/${post.slug}`);
                 })
                 .catch(err => {
                     const response = err.response;
@@ -66,14 +66,13 @@ export default function PostForm() {
             formData.append("title", post['title']);
             formData.append("content", post['content']);
             formData.append("excerpt", post['excerpt']);
-            // formData.append("category_id", 1);
-            formData.append("slug", post['slug']);
             if(post['image']) {
                 formData.append("image", post['image']);
             }
             axiosClient.post('/posts', formData )
-                .then(() => {
-
+                .then(({data}) => {
+                    console.log(data);
+                    // navigate(`/post/${post.slug}`);
                     // navigate(`/post/${post_slug}`)
                 })
                 // .catch(err => {
@@ -152,17 +151,6 @@ export default function PostForm() {
                     >
                         <Form.Control
                             value={post.title} onChange={ev => setPost({...post, title: ev.target.value})}
-                            as="textarea"
-                            placeholder="Leave a comment here"/>
-                    </FloatingLabel>
-
-                    <FloatingLabel
-                        controlId="floatingTextarea"
-                        label="slug"
-                        className="mb-3"
-                    >
-                        <Form.Control
-                            value={post.slug} onChange={ev => setPost({...post, slug: ev.target.value})}
                             as="textarea"
                             placeholder="Leave a comment here"/>
                     </FloatingLabel>

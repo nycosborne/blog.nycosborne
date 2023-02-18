@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CreatePost extends FormRequest
 {
@@ -25,10 +26,9 @@ class CreatePost extends FormRequest
     {
 
         return [
-            'title' => 'string',
+            'title' => 'string|required|unique:posts', //todo post title should be unique to this user not all
             'content' => 'string',
             'excerpt' => 'string',
-            'slug' => 'string',
             'category_id' => 'integer',
 //            'image' => 'image'
         ];
