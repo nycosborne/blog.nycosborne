@@ -73,7 +73,7 @@ class PostController extends Controller
      * Display the specified resource.
      *
      * @param \App\Models\Post $post
-     * @return \Illuminate\Http\Response
+     * @return PostResource
      */
     public function show(Post $post)
     {
