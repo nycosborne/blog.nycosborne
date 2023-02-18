@@ -33,4 +33,12 @@ class Post extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    // Setting and getting for model properties.
+    public function setSlugAttribute($title)
+    {
+
+        $this->attributes['slug'] = str_replace(" ", "-", strtolower($title));
+    }
+
 }

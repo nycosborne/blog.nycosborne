@@ -51,6 +51,7 @@ class PostController extends Controller
 //            $request->image->move(public_path('uploads'), $fileName);
 //        }
 
+
         Post::create([
             'excerpt' => $request->excerpt,
             //todo would like to determine why my liter hates this $request->content
@@ -58,8 +59,7 @@ class PostController extends Controller
             'content' => $request->content,
             'category_id' => $request->category_id,
             'title' => $request->title,
-            // todo Might could build the slug dynamically from the blog title.
-            'slug' => $request->slug
+            'slug' => $request->title, //Slug attribute is dynamically build from post title
 //            'image' => $fileName
         ]);
 

@@ -27,8 +27,6 @@ export default function Post() {
         }, [])
     }
 
-    console.log(post.content);
-
     return (<div>
         <Container>
 
@@ -41,7 +39,7 @@ export default function Post() {
                                 <h5 style={{color: '#fff'}}>{post.created}</h5>
                             </Col>
                         </Row>
-                        <Row md="auto" className={'justify-content-around'}>box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+                        <Row md="auto" className={'justify-content-around'}>
                             <Card.Img style={{maxWidth: '400px', marginTop: '50px', marginBottom: '40px', padding: '0px', boxShadow: 'rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px'}} src="/images/headshoot_300X300.gif"/>
                         </Row>
                     </Col>

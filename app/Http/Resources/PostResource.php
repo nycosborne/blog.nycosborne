@@ -25,7 +25,7 @@ class PostResource extends JsonResource
             'content' => $this->content,
             'created' => $this->created_at->format('M d Y'),
             'slug' => $this->slug,
-            'category_name' => $this->category->name,
+            'category_name' => $this->category->name ?? null,
             'image' => $this->image
         ];
 
