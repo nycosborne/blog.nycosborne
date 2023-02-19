@@ -7,6 +7,7 @@ use App\Http\Requests\CreatePost;
 use App\Http\Requests\PostRequest;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
+use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\ResponseFactory;
@@ -64,8 +65,14 @@ class PostController extends Controller
 //            'image' => $fileName
         ]);
 
+        $tag = new Tag();
+        $tag->tag_name = 'test tag nimm';
+        $tag->save();
+        $post->tags()->attach($tag);
+
         return response([
-            'slug' => $post->slug
+            'slug' => $post->slug,
+            'tag' => $post->tags()
         ]);
     }
 
@@ -77,6 +84,8 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
+        clock($post->category);
+        clock($post->tag);
         return new PostResource($post);
     }
 
