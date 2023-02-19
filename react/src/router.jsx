@@ -11,6 +11,7 @@ import Posts from "./view/Posts.jsx";
 import Post from "./view/Post.jsx";
 import PostForm from "./view/PostForm.jsx";
 import Categories from "./view/Categories.jsx";
+import Tags from "./view/Tags.jsx";
 
 
 const router = createBrowserRouter([
@@ -18,10 +19,6 @@ const router = createBrowserRouter([
         path: '/',
         element: <MasterLayout/>,
         children: [
-            {
-                path: '/categories/:cat_slug',
-                element: <Posts/>
-            },
             {
                 path: '/',
                 element: <Posts/>
@@ -37,6 +34,18 @@ const router = createBrowserRouter([
             {
                 path: '/categories/',
                 element: <Categories/>
+            },
+            {
+                path: '/categories/:cat_slug',
+                element: <Posts/>
+            },
+            {
+                path: '/tags/',
+                element: <Tags/>
+            },
+            {
+                path: '/tags/:tag',
+                element: <Posts/>
             }
         ]
 

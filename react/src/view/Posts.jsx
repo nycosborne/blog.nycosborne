@@ -57,10 +57,10 @@ export default function Posts() {
                             </Col>
                             <Col xs={10} style={{fontSize: '1.25rem'}}>
                                     <p>Hello, I'm Dan from New York 🗽</p>
-                                    <p>I'm a full stack engineer passionate about building usefully thing with clean code!</p>
-                                    <p>Been building and maintaining monolithic and
-                                        serverless enterprise applications for 5 plus years. Strong knowledge of PHP, Laravel, Node.js, Java,
-                                        relational and NoSQL databases. AWS certification.</p>
+                                    <p>I’m a full-stack engineer passionate about building useful things with clean code!</p>
+                                    <p>I’ve been building and maintaining monolithic and serverless enterprise applications
+                                        for 5+ years. Strong knowledge of PHP, Python, Laravel, Node.js, Reach.js, Java,
+                                        relational, and NoSQL databases. AWS certification.</p>
                                     <p>Happiest ❤️ when working closely with others.</p>
                              </Col>
                         </Row>

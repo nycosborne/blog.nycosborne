@@ -3,7 +3,9 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\PostController;
+use App\Http\Controllers\Api\TagsController;
 use App\Http\Controllers\FileController;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -32,6 +34,9 @@ Route::apiResource('/posts', PostController::class)->scoped([
 Route::apiResource('/categories', CategoryController::class)->scoped([
     'category' => 'slug',
 ]);
+
+Route::get('/tags', [TagsController::class, 'index']);
+
 
 Route::post('/signup', [AuthController::class, 'signup']);
 Route::post('/login', [AuthController::class, 'login']);
