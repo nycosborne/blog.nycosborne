@@ -12,24 +12,27 @@ export default function Tags(){
     const [tags, setTags] = useState([]);
 
     useEffect(()=>{
-        setLoading(true);
+
         axiosClient.get('/tags')
             .then(({data}) => {
                 // console.log(data);
-                setLoading(false);
+
                 setTags(data.data)
             }).catch(() => {
-            setLoading(false)
+
         })
     },[])
 
+
+    console.log(tags)
     return (
         <Container>
+
             <Col>
                 {
                     tags.map(t => (
-                        <Col key={t.id}>
-                            <h1><Link to={'/tags/' + t.id}>{t.tag_name}</Link></h1>
+                        <Col key={t.label}>
+                            <h1><Link to={'/tags/' + t.label}>{t.label}</Link></h1>
                         </Col>
                     ))}
             </Col>

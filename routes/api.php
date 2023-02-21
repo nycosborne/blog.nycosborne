@@ -37,6 +37,7 @@ Route::apiResource('/categories', CategoryController::class)->scoped([
 
 Route::get('/tags', [TagsController::class, 'index']);
 
+Route::get('/tags/{tag:tag_name}', [TagsController::class, 'show']);
 
 Route::post('/signup', [AuthController::class, 'signup']);
 Route::post('/login', [AuthController::class, 'login']);

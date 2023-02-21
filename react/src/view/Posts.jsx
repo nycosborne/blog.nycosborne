@@ -13,8 +13,9 @@ export default function Posts() {
     const [isHome, setHome] = useState(false)
     const location = useLocation()
     let {cat_slug} = useParams();
+    let {tag} = useParams();
 
-    if (!cat_slug) {
+    if (!cat_slug && !tag) {
         useEffect(() => {
             setLoading(true);
             axiosClient.get('/posts')
@@ -31,7 +32,7 @@ export default function Posts() {
             }
 
         }, [])
-    } else {
+    } else if (cat_slug) {
 
         useEffect(() => {
             setLoading(true);
@@ -44,7 +45,21 @@ export default function Posts() {
                 setLoading(false)
             })
         }, [])
+    } else {
+        useEffect(() => {
+            setLoading(true);
+            console.log(tag);
+            axiosClient.get(`/tags/${tag}`)
+                .then(({data}) => {
+                    console.log('hererr', data);
+                    setLoading(false);
+                    setPosts(data.data)
+                }).catch(() => {
+                setLoading(false)
+            })
+        }, [])
     }
+
 
     return (
         <Container>

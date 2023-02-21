@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CreatePost;
 use App\Http\Requests\PostRequest;
 use App\Http\Resources\PostResource;
+use App\Http\Resources\TagResource;
 use App\Models\Post;
 use App\Models\Tag;
 use App\Models\User;
@@ -54,7 +55,6 @@ class PostController extends Controller
 //            $request->image->move(public_path('uploads'), $fileName);
 //        }
 
-
         $post = Post::create([
             'excerpt' => $request->excerpt,
             //todo would like to determine why my liter hates this $request->content
@@ -92,8 +92,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-//        clock($post->category);
-//        clock($post->tag);
+
         return new PostResource($post);
     }
 

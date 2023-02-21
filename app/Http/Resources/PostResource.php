@@ -17,6 +17,13 @@ class PostResource extends JsonResource
      */
     public function toArray($request)
     {
+        $postTags = [];
+
+        // Todo move this to the post model
+        foreach ($this->tags->all() as $tag){
+
+            $postTags[] = ['tag_name' => $tag->tag_name];
+        }
 
         return [
             'id' => $this->id,
@@ -26,7 +33,8 @@ class PostResource extends JsonResource
             'created' => $this->created_at->format('M d Y'),
             'slug' => $this->slug,
             'category_name' => $this->category->name ?? null,
-            'image' => $this->image
+            'image' => $this->image,
+            'tags' => $postTags
         ];
 
     }

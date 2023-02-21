@@ -5,7 +5,7 @@ import {useStateContext} from "../context/ContextProvider.jsx";
 import {Button, Dropdown, FloatingLabel, Form} from "react-bootstrap";
 import CreatableSelect from 'react-select/creatable';
 
-import { ReactSearchAutocomplete } from 'react-search-autocomplete'
+import {ReactSearchAutocomplete} from 'react-search-autocomplete'
 import {forEach} from "react-bootstrap/ElementChildren";
 
 
@@ -32,7 +32,7 @@ export default function PostForm() {
     });
 
     const [errors, setErrors] = useState(null);
-    const [loading, setLoading] = useState(false);
+    const [tags, setTags] = useState(null);
 
     useEffect(() => {
         axiosClient.get('/tags')
@@ -71,31 +71,32 @@ export default function PostForm() {
                         setErrors(response.data.errors)
                     }
                 })
-        // else we'll create a new post
+            // else we'll create a new post
         } else {
             // Create a FormData object
             const formData = new FormData();
 
             // Append file to the formData object here
-            formData.append("title", post['title']);
-            formData.append("content", post['content']);
-            formData.append("excerpt", post['excerpt']);
-            formData.append("tag", post['tag']);
-            if(post['image']) {
-                formData.append("image", post['image']);
+            // formData.append("title", post['title']);
+            formData.append("title", post.title);
+            formData.append("content", post.content);
+            formData.append("excerpt", post.excerpt);
+            formData.append("tag", post.tag);
+            if (post.image) {
+                formData.append("image", post.image);
             }
             console.log('new post post request', post);
-                axiosClient.post('/posts', formData )
+            axiosClient.post('/posts', formData)
                 .then(({data}) => {
                     navigate(`/post/${data.slug}`);
                 })
-                // .catch(err => {
-                // todo need to add error handling
-                //     const response = err.response;
-                //     if (response && response.status === 422) {
-                //         setErrors(response.data.errors)
-                //     }
-                // })
+            // .catch(err => {
+            // todo need to add error handling
+            //     const response = err.response;
+            //     if (response && response.status === 422) {
+            //         setErrors(response.data.errors)
+            //     }
+            // })
         }
     }
 
@@ -105,25 +106,15 @@ export default function PostForm() {
     // }
 
 
-
-    const options = [
-        { value: 'chocolate', label: 'Chocolate' },
-        { value: 'strawberry', label: 'Strawberry' },
-        { value: 'vanilla', label: 'Vanilla' },
-    ];
-
-    const onChangUp = (selectedOption) => {
-        // console.log(selectedOption)
+    const onAddSelect = (selectedOption) => {
         let arr = [];
         selectedOption.forEach((val) => {
             console.log(val.label);
             arr.push(val.label);
         });
         setPost({...post, tag: arr})
-        console.log('handeled!!!', post.tag)
     }
 
-    // const [selectedOption, setSelectedOption] = useState(null);
     return (
 
         <div>
@@ -171,14 +162,13 @@ export default function PostForm() {
                 </Form.Group>
 
                 <CreatableSelect
+                    defaultValue={{lable: 'wew', value:'dw'}}
                     // defaultValue={selectedOption}
                     // onChange={setSelectedOption}
-                    onChange={onChangUp}
-                    options={options}
+                    onChange={onAddSelect}
+                    options={tags}
                     isMulti={true}
                 />
-
-
 
                 {/*<Form.Group controlId="formFile" className="mb-3">*/}
                 {/*    <Form.Label>Upload Image</Form.Label>*/}

@@ -5,27 +5,31 @@ import {useStateContext} from "../context/ContextProvider.jsx";
 import {Button, Card, Container, Dropdown, FloatingLabel, Form, Image} from "react-bootstrap";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import {forEach} from "react-bootstrap/ElementChildren";
 
 export default function Post() {
 
     let {post_slug} = useParams();
 
     const [post, setPost] = useState({
-        id: null, title: '', content: '', excerpt: '', created: null, slug: ''
+        id: null, title: '', content: '', excerpt: '', created: null, slug: '', tags: []
     })
 
+
+    let postss;
     if (post_slug) {
         useEffect(() => {
             axiosClient.get(`/posts/${post_slug}`)
                 .then(({data}) => {
-
                     setPost(data);
+
                 })
                 .catch(() => {
 
                 })
         }, [])
     }
+
 
     return (<div>
         <Container>
@@ -37,6 +41,12 @@ export default function Post() {
                             <Col>
                                 <h1 style={{color: '#fff'}}>{post.title}</h1>
                                 <h5 style={{color: '#fff'}}>{post.created}</h5>
+                                {
+                                    post.tags.map(p => (
+                                        <Col md="auto" key={p.tag_name}>
+                                          <a style={{maxWidth: '1000px', color: '#fff'}}>{p.tag_name}</a>
+                                        </Col>
+                                    ))}
                             </Col>
                         </Row>
                         <Row md="auto" className={'justify-content-around'}>

@@ -6,7 +6,7 @@ import {useStateContext} from "../context/ContextProvider.jsx";
 
 
 export default function Signup() {
-console.log('herer');
+;
     const nameRef = createRef()
     const emailRef = createRef()
     const passwordRef = createRef()
