@@ -3,13 +3,17 @@ import React, {useEffect, useState} from "react";
 import axiosClient from "../axios-client.js";
 import {useStateContext} from "../context/ContextProvider.jsx";
 import {Button, Dropdown, FloatingLabel, Form} from "react-bootstrap";
+import CreatableSelect from 'react-select/creatable';
 
 import { ReactSearchAutocomplete } from 'react-search-autocomplete'
+import {forEach} from "react-bootstrap/ElementChildren";
+
 
 export default function PostForm() {
 
     const navigate = useNavigate();
     let {post_slug} = useParams();
+
 
     const [post, setPost] = useState({
         id: null,
@@ -18,6 +22,7 @@ export default function PostForm() {
         excerpt: '',
         category_id: null,
         slug: '',
+        tag: [],
         image: null
     });
 
@@ -29,6 +34,15 @@ export default function PostForm() {
     const [errors, setErrors] = useState(null);
     const [loading, setLoading] = useState(false);
 
+    useEffect(() => {
+        axiosClient.get('/tags')
+            .then(({data}) => {
+                setTags(data.data);
+            })
+            .catch(() => {
+
+            })
+    }, [])
 
     if (post_slug) {
         useEffect(() => {
@@ -45,8 +59,8 @@ export default function PostForm() {
     function onSubmit(ev) {
         ev.preventDefault();
 
+        // If post ID exists we'll update the existing post.
         if (post.id) {
-
             axiosClient.put(`/posts/${post.slug}`, post)
                 .then(() => {
                     navigate(`/post/${post.slug}`);
@@ -57,8 +71,8 @@ export default function PostForm() {
                         setErrors(response.data.errors)
                     }
                 })
+        // else we'll create a new post
         } else {
-
             // Create a FormData object
             const formData = new FormData();
 
@@ -66,12 +80,13 @@ export default function PostForm() {
             formData.append("title", post['title']);
             formData.append("content", post['content']);
             formData.append("excerpt", post['excerpt']);
+            formData.append("tag", post['tag']);
             if(post['image']) {
                 formData.append("image", post['image']);
             }
-            axiosClient.post('/posts', formData )
+            console.log('new post post request', post);
+                axiosClient.post('/posts', formData )
                 .then(({data}) => {
-                    console.log(data);
                     navigate(`/post/${data.slug}`);
                 })
                 // .catch(err => {
@@ -84,59 +99,33 @@ export default function PostForm() {
         }
     }
 
-    const fileUpload = (ev) =>{
-
-        // setPost({...post, image: ev.target.files[0]});
-    }
-
-    const movieItems = [
-        {
-            id: 0,
-            title: "Titanic",
-            description: "A movie about love",
-        },
-        {
-            id: 1,
-            title: "Dead Poets Society",
-            description: "A movie about poetry and the meaning of life",
-        },
-        {
-            id: 2,
-            title: "Terminator 2",
-            description: "A robot from the future is sent back in time",
-        },
-        {
-            id: 3,
-            title: "Alien 2",
-            description: "Ripley is back for a new adventure",
-        },
-    ];
+    // const fileUpload = (ev) =>{
     //
-    const handleOnSearch = (string, results) => {
-        // onSearch will have as the first callback parameter
-        // the string searched and for the second the results.
-        console.log(string, results);
+    //     setPost({...post, image: ev.target.files[0]});
+    // }
+
+
+
+    const options = [
+        { value: 'chocolate', label: 'Chocolate' },
+        { value: 'strawberry', label: 'Strawberry' },
+        { value: 'vanilla', label: 'Vanilla' },
+    ];
+
+    const onChangUp = (selectedOption) => {
+        // console.log(selectedOption)
+        let arr = [];
+        selectedOption.forEach((val) => {
+            console.log(val.label);
+            arr.push(val.label);
+        });
+        setPost({...post, tag: arr})
+        console.log('handeled!!!', post.tag)
     }
 
-    const handleOnHover = (result) => {
-        // the item hovered
-        console.log(result);
-    }
-
-    const handleOnSelect = (item) => {
-        // the item selected
-        console.log(item);
-    }
-
-    const handleOnFocus = () => {
-        console.log('Focused');
-    }
-
-    const handleOnClear = () => {
-        console.log("Cleared");
-    };
-
+    // const [selectedOption, setSelectedOption] = useState(null);
     return (
+
         <div>
             {post.id && <h1>Edit Post: {post.title}</h1>}
             {!post.id && <h1>New Post</h1>}
@@ -181,56 +170,24 @@ export default function PostForm() {
 
                 </Form.Group>
 
-
-                <ReactSearchAutocomplete
-                    value={post.slug} onChange={ev => setPost({...post, slug: ev.target.value})}
-                    items={movieItems}
-                    fuseOptions={{ keys: ["title", "description"] }} // Search on both fields
-                    resultStringKeyName="title" // String to display in the results
-                    onSearch={handleOnSearch}
-                    onHover={handleOnHover}
-                    onSelect={handleOnSelect}
-                    onFocus={handleOnFocus}
-                    onClear={handleOnClear}
-                    showIcon={false}
-                    styling={{
-                        height: "34px",
-                        border: "1px solid darkgreen",
-                        borderRadius: "4px",
-                        backgroundColor: "white",
-                        boxShadow: "none",
-                        hoverBackgroundColor: "lightgreen",
-                        color: "darkgreen",
-                        fontSize: "12px",
-                        fontFamily: "Courier",
-                        iconColor: "green",
-                        lineColor: "lightgreen",
-                        placeholderColor: "darkgreen",
-                        clearIconMargin: "3px 8px 0 0",
-                        zIndex: 2,
-                    }}
+                <CreatableSelect
+                    // defaultValue={selectedOption}
+                    // onChange={setSelectedOption}
+                    onChange={onChangUp}
+                    options={options}
+                    isMulti={true}
                 />
 
-                <Form.Group controlId="formFile" className="mb-3">
-                    <Form.Label>Upload Image</Form.Label>
-                    <Form.Control
-                        type="file"
-                        onChange={ev => fileUpload(ev)}
-                    />
-                </Form.Group>
 
 
-{/*todo make the drop down option a dynamics DB pull*/}
-{/*                <Dropdown>*/}
-{/*                    <Dropdown.Toggle variant="success" id="dropdown-basic">*/}
-{/*                        Dropdown Button*/}
-{/*                    </Dropdown.Toggle>*/}
-{/*                    <Dropdown.Menu>*/}
-{/*                        <Dropdown.Item onClick={ev => setPost({...post, category_id: 1})}>Personal</Dropdown.Item>*/}
-{/*                        <Dropdown.Item onClick={ev => setPost({...post, category_id: 2})}>Work</Dropdown.Item>*/}
-{/*                        <Dropdown.Item onClick={ev => setPost({...post, category_id: 3})}>Hobbies</Dropdown.Item>*/}
-{/*                    </Dropdown.Menu>*/}
-{/*                </Dropdown>*/}
+                {/*<Form.Group controlId="formFile" className="mb-3">*/}
+                {/*    <Form.Label>Upload Image</Form.Label>*/}
+                {/*    <Form.Control*/}
+                {/*        type="file"*/}
+                {/*        onChange={ev => fileUpload(ev)}*/}
+                {/*    />*/}
+                {/*</Form.Group>*/}
+
                 <Button variant="primary" type="submit">
                     Submit
                 </Button>

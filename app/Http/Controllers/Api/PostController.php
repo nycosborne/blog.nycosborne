@@ -54,6 +54,7 @@ class PostController extends Controller
 //            $request->image->move(public_path('uploads'), $fileName);
 //        }
 
+
         $post = Post::create([
             'excerpt' => $request->excerpt,
             //todo would like to determine why my liter hates this $request->content
@@ -65,10 +66,17 @@ class PostController extends Controller
 //            'image' => $fileName
         ]);
 
-        $tag = new Tag();
-        $tag->tag_name = 'test tag nimm';
-        $tag->save();
-        $post->tags()->attach($tag);
+        foreach (explode(",",$request->tag) as $tagCheck){
+            // Check if this is a new tag
+            $tag = Tag::where('tag_name', $tagCheck)->first();
+
+            if ($tag == null) {
+                $tag = new Tag();
+                $tag->tag_name = $tagCheck;;
+                $tag->save();
+            }
+            $post->tags()->attach($tag);
+        }
 
         return response([
             'slug' => $post->slug,
@@ -84,8 +92,8 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        clock($post->category);
-        clock($post->tag);
+//        clock($post->category);
+//        clock($post->tag);
         return new PostResource($post);
     }
 

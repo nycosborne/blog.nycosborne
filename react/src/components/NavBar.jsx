@@ -39,7 +39,7 @@ function NavBar() {
                 <Navbar.Brand href="/">nycosborne's web_Log </Navbar.Brand>
                 <Nav className="me-auto">
                     <Nav.Link href="/posts">all</Nav.Link>
-                    <Nav.Link href="/tags">tags</Nav.Link>
+                    {/*<Nav.Link href="/tags">tags</Nav.Link>*/}
                     {/*todo need to replace categories with tags lot-o back end*/}
                     <Nav.Link href="/categories">categories</Nav.Link>
                 </Nav>
