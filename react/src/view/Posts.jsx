@@ -32,7 +32,6 @@ export default function Posts() {
 
         }, [])
     } else if (cat_slug) {
-
         useEffect(() => {
             setLoading(true);
             axiosClient.get(`/categories/${cat_slug}`)

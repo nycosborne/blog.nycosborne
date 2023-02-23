@@ -1,9 +1,6 @@
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
-import {Link} from "react-router-dom";
-import Row from "react-bootstrap/Row";
 import {useStateContext} from "../context/ContextProvider.jsx";
 import axiosClient from "../axios-client.js";
 
@@ -40,8 +37,8 @@ function NavBar() {
                 <Nav className="me-auto">
                     <Nav.Link href="/posts">all</Nav.Link>
                     <Nav.Link href="/tags">tags</Nav.Link>
-                    {/*todo need to replace categories with tags lot-o back end*/}
-                    <Nav.Link href="/categories">categories</Nav.Link>
+                    {/*categories are all set up if I ever need to implement*/}
+                    {/*<Nav.Link href="/categories">categories</Nav.Link>*/}
                 </Nav>
                 <Nav className="justify-content-end">
                     <Nav.Link target="_blank" href="https://github.com/nycosborne">GitHub</Nav.Link>
