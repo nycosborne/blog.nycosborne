@@ -10,12 +10,11 @@ import {forEach} from "react-bootstrap/ElementChildren";
 export default function Post() {
 
     let {post_slug} = useParams();
-
+    const baseUrl = import.meta.env.VITE_API_BASE_URL;
     const [post, setPost] = useState({
-        id: null, title: '', content: '', excerpt: '', created: null, slug: '', tags: []
+        id: null, title: '', content: '', excerpt: '', created: null, slug: '', tags: [], image: null
     })
 
-    console.log(post.tags);
     let postss;
     if (post_slug) {
         useEffect(() => {
@@ -52,7 +51,7 @@ export default function Post() {
                             </Col>
                         </Row>
                         <Row md="auto" className={'justify-content-around'}>
-                            <Card.Img style={{maxWidth: '400px', marginTop: '50px', marginBottom: '40px', padding: '0px', boxShadow: 'rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px'}} src="/images/headshoot_300X300.gif"/>
+                            <Card.Img style={{maxWidth: '400px', marginTop: '50px', marginBottom: '40px', padding: '0px', boxShadow: 'rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px'}} src={baseUrl + "/uploads/" + post.image}/>
                         </Row>
                     </Col>
                 </Row>

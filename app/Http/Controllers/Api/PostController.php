@@ -49,11 +49,11 @@ class PostController extends Controller
     {
 
         $data = $request->validated();
-//        $fileName = null;
-//        if($request->image){
-//            $fileName = time() . '.' . $request->image->extension();
-//            $request->image->move(public_path('uploads'), $fileName);
-//        }
+        $fileName = null;
+        if($request->image){
+            $fileName = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('uploads'), $fileName);
+        }
 
         $post = Post::create([
             'excerpt' => $request->excerpt,
@@ -63,7 +63,7 @@ class PostController extends Controller
             'category_id' => $request->category_id,
             'title' => $request->title,
             'slug' => $request->title, //Slug attribute is dynamically build from post title
-//            'image' => $fileName
+            'image' => $fileName
         ]);
 
         foreach (explode(",", $request->tags) as $tagCheck) {
@@ -131,7 +131,6 @@ class PostController extends Controller
                     $tag->tag_name = $v['value'];;
                     $tag->save();
                 }
-                clock('attaching tag',$tag->tag_name);
                 $post->tags()->attach($tag);
             }
         }

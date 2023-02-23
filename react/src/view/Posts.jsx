@@ -20,7 +20,6 @@ export default function Posts() {
             setLoading(true);
             axiosClient.get('/posts')
                 .then(({data}) => {
-                    // console.log(data);
                     setLoading(false);
                     setPosts(data.data)
                 }).catch(() => {
@@ -38,7 +37,6 @@ export default function Posts() {
             setLoading(true);
             axiosClient.get(`/categories/${cat_slug}`)
                 .then(({data}) => {
-                    console.log(data);
                     setLoading(false);
                     setPosts(data.data)
                 }).catch(() => {
@@ -48,10 +46,8 @@ export default function Posts() {
     } else {
         useEffect(() => {
             setLoading(true);
-            console.log(tag);
             axiosClient.get(`/tags/${tag}`)
                 .then(({data}) => {
-                    console.log('hererr', data);
                     setLoading(false);
                     setPosts(data.data)
                 }).catch(() => {

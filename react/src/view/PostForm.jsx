@@ -57,16 +57,13 @@ export default function PostForm() {
                 })
         }, [])
     }
-console.log('from load', post);
+
     function onSubmit(ev) {
         ev.preventDefault();
 
         // If post ID exists we'll update the existing post.
         if (post.id) {
-            console.log('on submit', post);
             axiosClient.put(`/posts/${post.slug}`, post)
-
-                // console.log(post)
                 .then(() => {
                     navigate(`/post/${post.slug}`);
                 })
@@ -108,10 +105,13 @@ console.log('from load', post);
             //         setErrors(response.data.errors)
             //     }
             // })
-
         }
     }
 
+    const fileUpload = (ev) =>{
+
+        setPost({...post, image: ev.target.files[0]});
+    }
 
     const onAddSelect = (selectedOption) => {
 
@@ -172,13 +172,13 @@ console.log('from load', post);
                     isMulti={true}
                 />
 
-                {/*<Form.Group controlId="formFile" className="mb-3">*/}
-                {/*    <Form.Label>Upload Image</Form.Label>*/}
-                {/*    <Form.Control*/}
-                {/*        type="file"*/}
-                {/*        onChange={ev => fileUpload(ev)}*/}
-                {/*    />*/}
-                {/*</Form.Group>*/}
+                <Form.Group controlId="formFile" className="mb-3">
+                    <Form.Label>Upload Image</Form.Label>
+                    <Form.Control
+                        type="file"
+                        onChange={ev => fileUpload(ev)}
+                    />
+                </Form.Group>
 
                 <Button variant="primary" type="submit">
                     Submit
