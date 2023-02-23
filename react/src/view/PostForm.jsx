@@ -57,13 +57,16 @@ export default function PostForm() {
                 })
         }, [])
     }
-console.log('post', post.tags);
+console.log('from load', post);
     function onSubmit(ev) {
         ev.preventDefault();
 
         // If post ID exists we'll update the existing post.
         if (post.id) {
+            console.log('on submit', post);
             axiosClient.put(`/posts/${post.slug}`, post)
+
+                // console.log(post)
                 .then(() => {
                     navigate(`/post/${post.slug}`);
                 })
@@ -79,21 +82,19 @@ console.log('post', post.tags);
             const formData = new FormData();
 
             // Append file to the formData object here
-            // formData.append("title", post['title']);
             formData.append("title", post.title);
             formData.append("content", post.content);
             formData.append("excerpt", post.excerpt);
 
             let arr = []
             Object.values(post.tags).forEach(val => {
-                console.log(val);
                 arr.push(val.value)
             });
 
             formData.append("tags", arr);
 
             if (post.image) {
-                formData.append("image", post.image);
+                formData.append("image", post .image);
             }
 
             axiosClient.post('/posts', formData)
@@ -107,7 +108,7 @@ console.log('post', post.tags);
             //         setErrors(response.data.errors)
             //     }
             // })
-            console.log('new post post request', formData);
+
         }
     }
 

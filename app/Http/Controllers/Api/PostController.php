@@ -65,22 +65,19 @@ class PostController extends Controller
             'slug' => $request->title, //Slug attribute is dynamically build from post title
 //            'image' => $fileName
         ]);
-clock(json_encode($request->tags));
-clock($request->title);
-clock($request->tags);
 
-//        foreach (explode(",",$request->tags) as $tagCheck){
-//            // Check if this is a new tag
-//            $tag = Tag::where('tag_name', $tagCheck)->first();
-//
-//            if ($tag == null) {
-//                $tag = new Tag();
-//                $tag->tag_name = $tagCheck;;
-//                $tag->save();
-//            }
-//                $post->tags()->attach($tag);
-//
-//        }
+        foreach (explode(",", $request->tags) as $tagCheck) {
+            // Check if this is a new tag
+            $tag = Tag::where('tag_name', $tagCheck)->first();
+
+            if ($tag == null) {
+                $tag = new Tag();
+                $tag->tag_name = $tagCheck;;
+                $tag->save();
+            }
+            $post->tags()->attach($tag);
+
+        }
 
         return response([
             'slug' => $post->slug,
@@ -121,12 +118,28 @@ clock($request->tags);
     public function update(PostRequest $request, Post $post)
     {
 
+        $post->tags()->detach();
         $data = $request->validated();
         $post->update($data);
+
+        if(!empty($request->tags)) {
+            foreach ($request->tags as $v) {
+                // Check if this is a new tag
+                $tag = Tag::where('tag_name', $v['value'])->first();
+                if ($tag == null) {
+                    $tag = new Tag();
+                    $tag->tag_name = $v['value'];;
+                    $tag->save();
+                }
+                clock('attaching tag',$tag->tag_name);
+                $post->tags()->attach($tag);
+            }
+        }
 
         return response([
             'post' => json_encode($data)
         ]);
+
     }
 
     /**
