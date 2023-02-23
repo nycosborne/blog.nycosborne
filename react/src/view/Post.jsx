@@ -1,4 +1,4 @@
-import {useNavigate, useParams} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import axiosClient from "../axios-client.js";
 import {useStateContext} from "../context/ContextProvider.jsx";
@@ -15,7 +15,7 @@ export default function Post() {
         id: null, title: '', content: '', excerpt: '', created: null, slug: '', tags: []
     })
 
-
+    console.log(post.tags);
     let postss;
     if (post_slug) {
         useEffect(() => {
@@ -40,13 +40,15 @@ export default function Post() {
                         <Row style={{paddingTop: '100px'}}>
                             <Col>
                                 <h1 style={{color: '#fff'}}>{post.title}</h1>
+                                <Row>
                                 <h5 style={{color: '#fff'}}>{post.created}</h5>
-                                {
-                                    post.tags.map(p => (
-                                        <Col md="auto" key={p.value}>
-                                          <a style={{maxWidth: '1000px', color: '#fff'}}>{p.value}</a>
-                                        </Col>
-                                    ))}
+                                    {
+                                        post.tags.map(p => (
+                                            <Col md="auto" key={p.value}>
+                                                <h6><Link style={{color: '#f0666b'}} to={'/tags/' + p.value}>{p.value}</Link></h6>
+                                            </Col>
+                                        ))}
+                                </Row>
                             </Col>
                         </Row>
                         <Row md="auto" className={'justify-content-around'}>
