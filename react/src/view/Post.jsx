@@ -43,8 +43,8 @@ export default function Post() {
                                 <h5 style={{color: '#fff'}}>{post.created}</h5>
                                 {
                                     post.tags.map(p => (
-                                        <Col md="auto" key={p.tag_name}>
-                                          <a style={{maxWidth: '1000px', color: '#fff'}}>{p.tag_name}</a>
+                                        <Col md="auto" key={p.value}>
+                                          <a style={{maxWidth: '1000px', color: '#fff'}}>{p.value}</a>
                                         </Col>
                                     ))}
                             </Col>

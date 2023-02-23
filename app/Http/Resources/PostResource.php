@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Tag;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\CategoryResource;
 
@@ -25,6 +26,8 @@ class PostResource extends JsonResource
             $postTags[] = ['tag_name' => $tag->tag_name];
         }
 
+        TagResource::collection(Tag::all());
+
         return [
             'id' => $this->id,
             'title' => $this->title,
@@ -34,7 +37,7 @@ class PostResource extends JsonResource
             'slug' => $this->slug,
             'category_name' => $this->category->name ?? null,
             'image' => $this->image,
-            'tags' => $postTags
+            'tags' => TagResource::collection($this->tags->all())
         ];
 
     }

@@ -7,6 +7,7 @@ import CreatableSelect from 'react-select/creatable';
 
 import {ReactSearchAutocomplete} from 'react-search-autocomplete'
 import {forEach} from "react-bootstrap/ElementChildren";
+import Col from "react-bootstrap/Col";
 
 
 export default function PostForm() {
@@ -22,7 +23,8 @@ export default function PostForm() {
         excerpt: '',
         category_id: null,
         slug: '',
-        tag: [],
+        tags: [],
+        tagForRequest: [],
         image: null
     });
 
@@ -32,12 +34,12 @@ export default function PostForm() {
     });
 
     const [errors, setErrors] = useState(null);
-    const [tags, setTags] = useState(null);
+    const [allTags, setAllTags] = useState(null);
 
     useEffect(() => {
         axiosClient.get('/tags')
             .then(({data}) => {
-                setTags(data.data);
+                setAllTags(data.data);
             })
             .catch(() => {
 
@@ -55,7 +57,7 @@ export default function PostForm() {
                 })
         }, [])
     }
-
+console.log('post', post.tags);
     function onSubmit(ev) {
         ev.preventDefault();
 
@@ -81,11 +83,19 @@ export default function PostForm() {
             formData.append("title", post.title);
             formData.append("content", post.content);
             formData.append("excerpt", post.excerpt);
-            formData.append("tag", post.tag);
+
+            let arr = []
+            Object.values(post.tags).forEach(val => {
+                console.log(val);
+                arr.push(val.value)
+            });
+
+            formData.append("tags", arr);
+
             if (post.image) {
                 formData.append("image", post.image);
             }
-            console.log('new post post request', post);
+
             axiosClient.post('/posts', formData)
                 .then(({data}) => {
                     navigate(`/post/${data.slug}`);
@@ -97,22 +107,14 @@ export default function PostForm() {
             //         setErrors(response.data.errors)
             //     }
             // })
+            console.log('new post post request', formData);
         }
     }
 
-    // const fileUpload = (ev) =>{
-    //
-    //     setPost({...post, image: ev.target.files[0]});
-    // }
-
 
     const onAddSelect = (selectedOption) => {
-        let arr = [];
-        selectedOption.forEach((val) => {
-            console.log(val.label);
-            arr.push(val.label);
-        });
-        setPost({...post, tag: arr})
+
+        setPost({...post, tags: selectedOption})
     }
 
     return (
@@ -162,11 +164,10 @@ export default function PostForm() {
                 </Form.Group>
 
                 <CreatableSelect
-                    defaultValue={{lable: 'wew', value:'dw'}}
-                    // defaultValue={selectedOption}
-                    // onChange={setSelectedOption}
+                    // defaultValue={post.tags}
+                    value={post.tags}
                     onChange={onAddSelect}
-                    options={tags}
+                    options={allTags}
                     isMulti={true}
                 />
 

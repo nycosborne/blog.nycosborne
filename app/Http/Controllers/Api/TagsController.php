@@ -23,8 +23,6 @@ class TagsController extends Controller
     public function show(Tag $tag)
     {
 
-        clock('herer');
-
         return  PostResource::collection($tag->posts);
     }
 }

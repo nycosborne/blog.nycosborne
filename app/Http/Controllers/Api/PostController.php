@@ -65,18 +65,22 @@ class PostController extends Controller
             'slug' => $request->title, //Slug attribute is dynamically build from post title
 //            'image' => $fileName
         ]);
+clock(json_encode($request->tags));
+clock($request->title);
+clock($request->tags);
 
-        foreach (explode(",",$request->tag) as $tagCheck){
-            // Check if this is a new tag
-            $tag = Tag::where('tag_name', $tagCheck)->first();
-
-            if ($tag == null) {
-                $tag = new Tag();
-                $tag->tag_name = $tagCheck;;
-                $tag->save();
-            }
-            $post->tags()->attach($tag);
-        }
+//        foreach (explode(",",$request->tags) as $tagCheck){
+//            // Check if this is a new tag
+//            $tag = Tag::where('tag_name', $tagCheck)->first();
+//
+//            if ($tag == null) {
+//                $tag = new Tag();
+//                $tag->tag_name = $tagCheck;;
+//                $tag->save();
+//            }
+//                $post->tags()->attach($tag);
+//
+//        }
 
         return response([
             'slug' => $post->slug,
@@ -133,6 +137,6 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        //todo will need to updated post_tag table.
     }
 }
