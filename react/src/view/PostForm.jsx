@@ -61,11 +61,31 @@ export default function PostForm() {
     function onSubmit(ev) {
         ev.preventDefault();
 
+
         // If post ID exists we'll update the existing post.
         if (post.id) {
-            axiosClient.put(`/posts/${post.slug}`, post)
+
+            const formData1 = new FormData();
+
+            // Append file to the formData object here
+            formData1.append("id", post.id);
+            formData1.append("title", post.title);
+            formData1.append("excerpt", post.excerpt);
+            formData1.append("content", post.content);
+            formData1.append("created", post.created);
+            formData1.append("slug", post.slug);
+            formData1.append("category_name", post.category_name);
+            formData1.append("image", post.image);
+            let arr = []
+            Object.values(post.tags).forEach(val => {
+                arr.push(val.value)
+            });
+            formData1.append("tags", arr);
+            formData1.append('_method', 'PUT')
+
+            axiosClient.post(`/posts/${post.slug}`, formData1)
                 .then(() => {
-                    navigate(`/post/${post.slug}`);
+                    // navigate(`/post/${post.slug}`);
                 })
                 .catch(err => {
                     const response = err.response;
@@ -87,11 +107,10 @@ export default function PostForm() {
             Object.values(post.tags).forEach(val => {
                 arr.push(val.value)
             });
-
             formData.append("tags", arr);
 
             if (post.image) {
-                formData.append("image", post .image);
+                formData.append("image", post.image);
             }
 
             axiosClient.post('/posts', formData)
@@ -108,9 +127,30 @@ export default function PostForm() {
         }
     }
 
-    const fileUpload = (ev) =>{
+    const selectFile = (ev) =>{
 
-        setPost({...post, image: ev.target.files[0]});
+        // setPost({...post, image: ev.target.files[0]});
+        // setFile({...file, file: ev.target.files[0]});
+        setPost({ ...post, image: ev.target.files[0]});
+    }
+
+    const upLoadFile = () => {
+
+        // Create a FormData object
+        const data = new FormData()
+        data.append('image', post.image)
+        data.append("excerpt", post.excerpt);
+        data.append('_method', 'PUT')
+        console.log(post.image);
+        console.log(data);
+
+        for (const pair of data.entries()) {
+            console.log(`${pair[0]}, ${pair[1]}`);
+        }
+        axiosClient.post(`/posts/${post.slug}`, data)
+            .then(() => {
+                // navigate(`/post/${post.slug}`);
+            })
     }
 
     const onAddSelect = (selectedOption) => {
@@ -176,7 +216,7 @@ export default function PostForm() {
                     <Form.Label>Upload Image</Form.Label>
                     <Form.Control
                         type="file"
-                        onChange={ev => fileUpload(ev)}
+                        onChange={ev => selectFile(ev)}
                     />
                 </Form.Group>
 
@@ -184,6 +224,10 @@ export default function PostForm() {
                     Submit
                 </Button>
             </Form>
+
+            <Button variant="primary" onClick={upLoadFile}>
+                Upload
+            </Button>
         </div>
     )
 }

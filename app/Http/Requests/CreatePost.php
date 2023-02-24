@@ -24,10 +24,9 @@ class CreatePost extends FormRequest
      */
     public function rules()
     {
-        clock($this->tags);
 
         return [
-            'title' => 'string|required|unique:posts', //todo post title should be unique to this user not all
+//            'title' => 'string|required|unique:posts', //todo post title should be unique to this user not all
             'content' => 'string',
             'excerpt' => 'string',
             'category_id' => 'integer',

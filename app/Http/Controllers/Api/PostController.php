@@ -111,24 +111,34 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param PostRequest $request
+     * @param CreatePost $request
      * @param Post $post
      * @return Response
      */
-    public function update(PostRequest $request, Post $post)
+    public function update(CreatePost $request, Post $post)
     {
-
-        $post->tags()->detach();
+        clock('updating');
+        clock($request->all());
         $data = $request->validated();
+
+        $fileName = null;
+        if($request->image && gettype($request->image) != 'string'){
+            $fileName = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('uploads'), $fileName);
+        }
+        $data['image'] = $fileName;
+        clock($data);
         $post->update($data);
 
+        $post->tags()->detach();
         if(!empty($request->tags)) {
-            foreach ($request->tags as $v) {
+            foreach (explode(",", $request->tags) as $v) {
+                clock("tag work");
                 // Check if this is a new tag
-                $tag = Tag::where('tag_name', $v['value'])->first();
+                $tag = Tag::where('tag_name', $v)->first();
                 if ($tag == null) {
                     $tag = new Tag();
-                    $tag->tag_name = $v['value'];;
+                    $tag->tag_name = $v;;
                     $tag->save();
                 }
                 $post->tags()->attach($tag);
