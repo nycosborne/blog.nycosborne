@@ -1,11 +1,9 @@
 import {Link, useNavigate, useParams} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import axiosClient from "../axios-client.js";
-import {useStateContext} from "../context/ContextProvider.jsx";
 import {Button, Card, Container, Dropdown, FloatingLabel, Form, Image} from "react-bootstrap";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import {forEach} from "react-bootstrap/ElementChildren";
 
 export default function Post() {
 
@@ -13,9 +11,8 @@ export default function Post() {
     const baseUrl = import.meta.env.VITE_API_BASE_URL;
     const [post, setPost] = useState({
         id: null, title: '', content: '', excerpt: '', created: null, slug: '', tags: [], image: null
-    })
+    });
 
-    let postss;
     if (post_slug) {
         useEffect(() => {
             axiosClient.get(`/posts/${post_slug}`)
@@ -28,7 +25,6 @@ export default function Post() {
                 })
         }, [])
     }
-
 
     return (<div>
         <Container>

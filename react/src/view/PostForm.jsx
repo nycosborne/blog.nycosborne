@@ -28,10 +28,6 @@ export default function PostForm() {
         image: null
     });
 
-    const [file, setFile] = useState({
-        title: 'here title',
-        file: null
-    });
 
     const [errors, setErrors] = useState(null);
     const [allTags, setAllTags] = useState(null);
@@ -61,31 +57,29 @@ export default function PostForm() {
     function onSubmit(ev) {
         ev.preventDefault();
 
+        const data = new FormData();
+        // Append file to the formData object here
+        data.append("id", post.id);
+        data.append("title", post.title);
+        data.append("excerpt", post.excerpt);
+        data.append("content", post.content);
+        data.append("created", post.created);
+        data.append("slug", post.slug);
+        data.append("category_name", post.category_name);
+        data.append("image", post.image);
+        let arr = []
+        Object.values(post.tags).forEach(val => {
+            arr.push(val.value)
+        });
+        data.append("tags", arr);
+        data.append('_method', 'PUT');
 
         // If post ID exists we'll update the existing post.
         if (post.id) {
 
-            const formData1 = new FormData();
-
-            // Append file to the formData object here
-            formData1.append("id", post.id);
-            formData1.append("title", post.title);
-            formData1.append("excerpt", post.excerpt);
-            formData1.append("content", post.content);
-            formData1.append("created", post.created);
-            formData1.append("slug", post.slug);
-            formData1.append("category_name", post.category_name);
-            formData1.append("image", post.image);
-            let arr = []
-            Object.values(post.tags).forEach(val => {
-                arr.push(val.value)
-            });
-            formData1.append("tags", arr);
-            formData1.append('_method', 'PUT')
-
-            axiosClient.post(`/posts/${post.slug}`, formData1)
+            axiosClient.post(`/posts/${post.slug}`, data)
                 .then(() => {
-                    // navigate(`/post/${post.slug}`);
+                    navigate(`/post/${post.slug}`);
                 })
                 .catch(err => {
                     const response = err.response;
@@ -127,11 +121,11 @@ export default function PostForm() {
         }
     }
 
-    const selectFile = (ev) =>{
+    const selectFile = (ev) => {
 
         // setPost({...post, image: ev.target.files[0]});
         // setFile({...file, file: ev.target.files[0]});
-        setPost({ ...post, image: ev.target.files[0]});
+        setPost({...post, image: ev.target.files[0]});
     }
 
     const upLoadFile = () => {

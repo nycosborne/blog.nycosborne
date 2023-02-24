@@ -75,6 +75,7 @@ class PostController extends Controller
                 $tag->tag_name = $tagCheck;;
                 $tag->save();
             }
+
             $post->tags()->attach($tag);
 
         }
@@ -117,23 +118,24 @@ class PostController extends Controller
      */
     public function update(CreatePost $request, Post $post)
     {
-        clock('updating');
-        clock($request->all());
+
         $data = $request->validated();
 
         $fileName = null;
         if($request->image && gettype($request->image) != 'string'){
             $fileName = time() . '.' . $request->image->extension();
             $request->image->move(public_path('uploads'), $fileName);
+            $data['image'] = $fileName;
+            // delete image previous post image
+            unlink("uploads/". $post->image);
         }
-        $data['image'] = $fileName;
-        clock($data);
+        //Update post with form values.
         $post->update($data);
-
+        //Delete all
         $post->tags()->detach();
         if(!empty($request->tags)) {
             foreach (explode(",", $request->tags) as $v) {
-                clock("tag work");
+
                 // Check if this is a new tag
                 $tag = Tag::where('tag_name', $v)->first();
                 if ($tag == null) {

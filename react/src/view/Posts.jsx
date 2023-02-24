@@ -9,7 +9,6 @@ import Row from "react-bootstrap/Row";
 export default function Posts() {
 
     const [posts, setPosts] = useState([])
-    const [loading, setLoading] = useState(false)
     const [isHome, setHome] = useState(false)
     const location = useLocation()
     let {cat_slug} = useParams();
@@ -18,13 +17,10 @@ export default function Posts() {
 
     if (!cat_slug && !tag) {
         useEffect(() => {
-            setLoading(true);
             axiosClient.get('/posts')
                 .then(({data}) => {
-                    setLoading(false);
                     setPosts(data.data)
                 }).catch(() => {
-                setLoading(false)
             })
 
             if (location.pathname === '/') {
@@ -34,28 +30,21 @@ export default function Posts() {
         }, [])
     } else if (cat_slug) {
         useEffect(() => {
-            setLoading(true);
             axiosClient.get(`/categories/${cat_slug}`)
                 .then(({data}) => {
-                    setLoading(false);
                     setPosts(data.data)
                 }).catch(() => {
-                setLoading(false)
             })
         }, [])
     } else {
         useEffect(() => {
-            setLoading(true);
             axiosClient.get(`/tags/${tag}`)
                 .then(({data}) => {
-                    setLoading(false);
                     setPosts(data.data)
                 }).catch(() => {
-                setLoading(false)
             })
         }, [])
     }
-
 
     return (
         <Container>
