@@ -1,44 +1,32 @@
 import {useNavigate, useParams} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import axiosClient from "../axios-client.js";
-import {useStateContext} from "../context/ContextProvider.jsx";
 import {Button, Dropdown, FloatingLabel, Form} from "react-bootstrap";
 import CreatableSelect from 'react-select/creatable';
-
-import {ReactSearchAutocomplete} from 'react-search-autocomplete'
-import {forEach} from "react-bootstrap/ElementChildren";
-import Col from "react-bootstrap/Col";
-
 
 export default function PostForm() {
 
     const navigate = useNavigate();
     let {post_slug} = useParams();
 
-
     const [post, setPost] = useState({
         id: null,
         title: '',
         content: '',
         excerpt: '',
-        category_id: null,
+        // category_id: null,
         slug: '',
         tags: [],
-        tagForRequest: [],
         image: null
     });
 
-
     const [errors, setErrors] = useState(null);
-    const [allTags, setAllTags] = useState(null);
+    const [allTags, setAllTags] = useState([]);
 
     useEffect(() => {
         axiosClient.get('/tags')
             .then(({data}) => {
                 setAllTags(data.data);
-            })
-            .catch(() => {
-
             })
     }, [])
 
@@ -65,49 +53,30 @@ export default function PostForm() {
         data.append("content", post.content);
         data.append("created", post.created);
         data.append("slug", post.slug);
-        data.append("category_name", post.category_name);
         data.append("image", post.image);
         let arr = []
         Object.values(post.tags).forEach(val => {
             arr.push(val.value)
         });
         data.append("tags", arr);
-        data.append('_method', 'PUT');
 
         // If post ID exists we'll update the existing post.
         if (post.id) {
+        data.append('_method', 'PUT');
 
             axiosClient.post(`/posts/${post.slug}`, data)
                 .then(() => {
                     navigate(`/post/${post.slug}`);
                 })
-                .catch(err => {
-                    const response = err.response;
-                    if (response && response.status === 422) {
-                        setErrors(response.data.errors)
-                    }
-                })
-            // else we'll create a new post
+                // .catch(err => {
+                //     const response = err.response;
+                //     if (response && response.status === 422) {
+                //         setErrors(response.data.errors)
+                //     }
+                // })
+        // else we'll create a new post
         } else {
-            // Create a FormData object
-            const formData = new FormData();
-
-            // Append file to the formData object here
-            formData.append("title", post.title);
-            formData.append("content", post.content);
-            formData.append("excerpt", post.excerpt);
-
-            let arr = []
-            Object.values(post.tags).forEach(val => {
-                arr.push(val.value)
-            });
-            formData.append("tags", arr);
-
-            if (post.image) {
-                formData.append("image", post.image);
-            }
-
-            axiosClient.post('/posts', formData)
+            axiosClient.post('/posts', data)
                 .then(({data}) => {
                     navigate(`/post/${data.slug}`);
                 })
@@ -123,28 +92,7 @@ export default function PostForm() {
 
     const selectFile = (ev) => {
 
-        // setPost({...post, image: ev.target.files[0]});
-        // setFile({...file, file: ev.target.files[0]});
         setPost({...post, image: ev.target.files[0]});
-    }
-
-    const upLoadFile = () => {
-
-        // Create a FormData object
-        const data = new FormData()
-        data.append('image', post.image)
-        data.append("excerpt", post.excerpt);
-        data.append('_method', 'PUT')
-        console.log(post.image);
-        console.log(data);
-
-        for (const pair of data.entries()) {
-            console.log(`${pair[0]}, ${pair[1]}`);
-        }
-        axiosClient.post(`/posts/${post.slug}`, data)
-            .then(() => {
-                // navigate(`/post/${post.slug}`);
-            })
     }
 
     const onAddSelect = (selectedOption) => {
@@ -218,10 +166,6 @@ export default function PostForm() {
                     Submit
                 </Button>
             </Form>
-
-            <Button variant="primary" onClick={upLoadFile}>
-                Upload
-            </Button>
         </div>
     )
 }

@@ -26,7 +26,7 @@ class CreatePost extends FormRequest
     {
 
         return [
-//            'title' => 'string|required|unique:posts', //todo post title should be unique to this user not all
+            'title' => 'string', //todo post title should be unique to this user not all
             'content' => 'string',
             'excerpt' => 'string',
             'category_id' => 'integer',

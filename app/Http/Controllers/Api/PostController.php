@@ -127,7 +127,9 @@ class PostController extends Controller
             $request->image->move(public_path('uploads'), $fileName);
             $data['image'] = $fileName;
             // delete image previous post image
-            unlink("uploads/". $post->image);
+            if($post->image) {
+                unlink("uploads/" . $post->image);
+            }
         }
         //Update post with form values.
         $post->update($data);
