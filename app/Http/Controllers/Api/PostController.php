@@ -4,17 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreatePost;
-use App\Http\Requests\PostRequest;
 use App\Http\Resources\PostResource;
-use App\Http\Resources\TagResource;
 use App\Models\Post;
 use App\Models\Tag;
-use App\Models\User;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\Routing\ResponseFactory;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use mysql_xdevapi\Collection;
 
 class PostController extends Controller
 {
@@ -30,16 +23,6 @@ class PostController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param CreatePost $request
@@ -50,7 +33,7 @@ class PostController extends Controller
 
         $data = $request->validated();
         $fileName = null;
-        if($request->image){
+        if ($request->image) {
             $fileName = time() . '.' . $request->image->extension();
             $request->image->move(public_path('uploads'), $fileName);
         }
@@ -99,17 +82,6 @@ class PostController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param \App\Models\Post $post
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Post $post)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param CreatePost $request
@@ -122,12 +94,14 @@ class PostController extends Controller
         $data = $request->validated();
 
         $fileName = null;
-        if($request->image && gettype($request->image) != 'string'){
+        if ($request->image && gettype($request->image) != 'string') {
             $fileName = time() . '.' . $request->image->extension();
             $request->image->move(public_path('uploads'), $fileName);
             $data['image'] = $fileName;
-            // delete image previous post image
-            if($post->image) {
+            //If upload new image and we have existing image
+            if ($post->image &&
+                file_exists(public_path('uploads') . "/" . $fileName)) {
+                // Delete old imag
                 unlink("uploads/" . $post->image);
             }
         }
@@ -135,7 +109,7 @@ class PostController extends Controller
         $post->update($data);
         //Delete all
         $post->tags()->detach();
-        if(!empty($request->tags)) {
+        if (!empty($request->tags)) {
             foreach (explode(",", $request->tags) as $v) {
 
                 // Check if this is a new tag
@@ -155,14 +129,4 @@ class PostController extends Controller
 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param \App\Models\Post $post
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Post $post)
-    {
-        //todo will need to updated post_tag table.
-    }
 }
