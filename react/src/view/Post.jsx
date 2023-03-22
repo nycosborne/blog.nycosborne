@@ -6,7 +6,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 export default function Post() {
-
+    // Pull slug from url parma
     let {post_slug} = useParams();
     const baseUrl = import.meta.env.VITE_API_BASE_URL;
     const [post, setPost] = useState({
