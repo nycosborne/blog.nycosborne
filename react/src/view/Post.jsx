@@ -12,9 +12,10 @@ export default function Post() {
     const [post, setPost] = useState({
         tags: [], image: ''
     });
-
+    // Check if post_slug is set
     if (post_slug) {
         useEffect(() => {
+            // Get request with post_slug and arg
             axiosClient.get(`/posts/${post_slug}`)
                 .then(({data}) => {
                     setPost(data);
