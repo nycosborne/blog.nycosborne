@@ -1,8 +1,10 @@
 import {useNavigate, useParams} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import axiosClient from "../axios-client.js";
-import {Button, Dropdown, FloatingLabel, Form} from "react-bootstrap";
+import {Button, FloatingLabel, Form} from "react-bootstrap";
+import TextWiz from "../components/TextWiz.jsx";
 import CreatableSelect from 'react-select/creatable';
+
 
 export default function PostForm() {
 
@@ -20,7 +22,7 @@ export default function PostForm() {
         image: null
     });
 
-    const [errors, setErrors] = useState(null);
+    // const [errors, setErrors] = useState(null);
     const [allTags, setAllTags] = useState([]);
 
     useEffect(() => {
@@ -62,19 +64,19 @@ export default function PostForm() {
 
         // If post ID exists we'll update the existing post.
         if (post.id) {
-        data.append('_method', 'PUT');
+            data.append('_method', 'PUT');
 
             axiosClient.post(`/posts/${post.slug}`, data)
                 .then(() => {
                     navigate(`/post/${post.slug}`);
                 })
-                // .catch(err => {
-                //     const response = err.response;
-                //     if (response && response.status === 422) {
-                //         setErrors(response.data.errors)
-                //     }
-                // })
-        // else we'll create a new post
+            // .catch(err => {
+            //     const response = err.response;
+            //     if (response && response.status === 422) {
+            //         setErrors(response.data.errors)
+            //     }
+            // })
+            // else we'll create a new post
         } else {
             axiosClient.post('/posts', data)
                 .then(({data}) => {
@@ -136,12 +138,14 @@ export default function PostForm() {
                         label="Content"
                         className="mb-3"
                     >
+                        {/*Main content goes here with Quill*/}
                         <Form.Control
                             value={post.content} onChange={ev => setPost({...post, content: ev.target.value})}
                             as="textarea"
                             placeholder="Leave a comment here"
                             style={{height: '200px'}}/>
                     </FloatingLabel>
+                    <TextWiz/>
 
 
                 </Form.Group>
