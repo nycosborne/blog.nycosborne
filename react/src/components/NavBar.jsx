@@ -47,7 +47,7 @@ function NavBar() {
                 {
                     isAdmin &&
                     <>
-                    <Nav.Link href="https://twitter.com/nycosborne">Admin</Nav.Link>
+                    <Nav.Link href="/dashboard">Admin</Nav.Link>
                     <Nav.Link href="#" onClick={onLogout}> {user.name} Log Out</Nav.Link>
                     </>
                 }

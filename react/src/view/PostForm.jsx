@@ -2,7 +2,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import axiosClient from "../axios-client.js";
 import {Button, FloatingLabel, Form} from "react-bootstrap";
-import TextWiz from "../components/TextWiz.jsx";
+import CustomEditor from "../components/CustomEditor.jsx";
 import CreatableSelect from 'react-select/creatable';
 
 
@@ -107,7 +107,6 @@ export default function PostForm() {
         <div>
             {post.id && <h1>Edit Post: {post.title}</h1>}
             {!post.id && <h1>New Post</h1>}
-
             <Form onSubmit={onSubmit}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
 
@@ -133,23 +132,26 @@ export default function PostForm() {
                             placeholder="Leave a comment here"/>
                     </FloatingLabel>
 
-                    <FloatingLabel
-                        controlId="floatingTextarea"
-                        label="Content"
-                        className="mb-3"
-                    >
-                        {/*Main content goes here with Quill*/}
-                        <Form.Control
-                            value={post.content} onChange={ev => setPost({...post, content: ev.target.value})}
-                            as="textarea"
-                            placeholder="Leave a comment here"
-                            style={{height: '200px'}}/>
-                    </FloatingLabel>
-                    <TextWiz/>
+                    {/*<FloatingLabel*/}
+                    {/*    controlId="floatingTextarea"*/}
+                    {/*    label="Content"*/}
+                    {/*    className="mb-3"*/}
+                    {/*>*/}
+                        <CustomEditor
+                            value={post.content}
+                            onChange={ev => setPost({...post, content: ev.target.value})}
+                        />
+                        {/*<Form.Control*/}
+                        {/*    value={post.content} onChange={ev => setPost({...post, content: ev.target.value})}*/}
+                        {/*    as="textarea"*/}
+                        {/*    placeholder="Leave a comment here"*/}
+                        {/*    style={{height: '200px'}}/>*/}
+                    {/*</FloatingLabel>*/}
+
 
 
                 </Form.Group>
-
+                {/*Adds the tags to the post*/}
                 <CreatableSelect
                     // defaultValue={post.tags}
                     value={post.tags}
