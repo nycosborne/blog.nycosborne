@@ -132,34 +132,26 @@ export default function PostForm() {
                             placeholder="Leave a comment here"/>
                     </FloatingLabel>
 
-                    {/*<FloatingLabel*/}
-                    {/*    controlId="floatingTextarea"*/}
-                    {/*    label="Content"*/}
-                    {/*    className="mb-3"*/}
-                    {/*>*/}
-                        <CustomEditor
-                            value={post.content}
-                            onChange={ev => setPost({...post, content: ev.target.value})}
-                        />
-                        {/*<Form.Control*/}
-                        {/*    value={post.content} onChange={ev => setPost({...post, content: ev.target.value})}*/}
-                        {/*    as="textarea"*/}
-                        {/*    placeholder="Leave a comment here"*/}
-                        {/*    style={{height: '200px'}}/>*/}
-                    {/*</FloatingLabel>*/}
-
-
 
                 </Form.Group>
+                <Form.Group controlId="formContent" className="mb-3">
+                    <Form.Label>Content</Form.Label>
+                    <CustomEditor
+                        value={post.content}
+                        onChange={ev => setPost({...post, content: ev.target.value})}
+                    />
+                </Form.Group>
                 {/*Adds the tags to the post*/}
-                <CreatableSelect
-                    // defaultValue={post.tags}
-                    value={post.tags}
-                    onChange={onAddSelect}
-                    options={allTags}
-                    isMulti={true}
-                />
-
+                <Form.Group>
+                    <Form.Label>Tags</Form.Label>
+                    <CreatableSelect
+                        // defaultValue={post.tags}
+                        value={post.tags}
+                        onChange={onAddSelect}
+                        options={allTags}
+                        isMulti={true}
+                    />
+                </Form.Group>
                 <Form.Group controlId="formFile" className="mb-3">
                     <Form.Label>Upload Image</Form.Label>
                     <Form.Control
