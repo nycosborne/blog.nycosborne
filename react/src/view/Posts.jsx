@@ -1,10 +1,7 @@
 import {useEffect, useState} from "react";
 import axiosClient from "../axios-client.js";
-import {Link, useParams} from "react-router-dom";
-import {useLocation} from 'react-router-dom';
-import {Container} from "react-bootstrap";
-import {Col, Card} from "react-bootstrap";
-import Row from "react-bootstrap/Row";
+import {Link, useParams, useLocation} from "react-router-dom";
+import {Col, Card, Container, Row} from "react-bootstrap";
 
 export default function Posts() {
 
