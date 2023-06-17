@@ -56,7 +56,7 @@ function AdminLayout() {
                 <Col xs={4} sm={4} md={4} lg={4} style={ styles.left }>
                     <Row><Link to="/dashboard">Dashboard</Link></Row>
                     <Row><Link to="/users">Users</Link></Row>
-                    <Row><Link to="/">Posts</Link></Row>
+                    <Row><Link to="/posts/list">Posts</Link></Row>
                     <Row><Link to="/post/new">New Posts</Link></Row>
                 </Col>
 

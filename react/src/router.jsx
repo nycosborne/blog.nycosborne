@@ -1,4 +1,4 @@
-import {createBrowserRouter, Navigate} from "react-router-dom";
+import {createBrowserRouter, Link, Navigate} from "react-router-dom";
 import Login from "./view/Login.jsx";
 import Signup from "./view/Signup.jsx";
 import Users from "./view/Users.jsx";
@@ -12,6 +12,7 @@ import Post from "./view/Post.jsx";
 import PostForm from "./view/PostForm.jsx";
 import Categories from "./view/Categories.jsx";
 import Tags from "./view/Tags.jsx";
+import ListPost from "./view/ListPost.jsx";
 
 
 const router = createBrowserRouter([
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
             {
                 path: '/dashboard',
                 element: <Dashboard/>
+            },
+            {
+                path: '/posts/list',
+                element: <ListPost/>
             },
             {
                 path: '/post/new',
