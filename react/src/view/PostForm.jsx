@@ -1,33 +1,29 @@
-import {useNavigate, useParams} from "react-router-dom";
-import React, {useEffect, useState} from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import axiosClient from "../axios-client.js";
-import {Button, FloatingLabel, Form} from "react-bootstrap";
+import { Button, FloatingLabel, Form } from "react-bootstrap";
 import CustomEditor from "../components/CustomEditor.jsx";
 import CreatableSelect from 'react-select/creatable';
 
-
 export default function PostForm() {
-
     const navigate = useNavigate();
-    let {post_slug} = useParams();
+    let { post_slug } = useParams();
 
     const [post, setPost] = useState({
         id: null,
         title: '',
         content: '',
         excerpt: '',
-        // category_id: null,
         slug: '',
         tags: [],
         image: null
     });
 
-    // const [errors, setErrors] = useState(null);
     const [allTags, setAllTags] = useState([]);
 
     useEffect(() => {
         axiosClient.get('/tags')
-            .then(({data}) => {
+            .then(({ data }) => {
                 setAllTags(data.data);
             })
     }, [])
@@ -35,7 +31,7 @@ export default function PostForm() {
     if (post_slug) {
         useEffect(() => {
             axiosClient.get(`/posts/${post_slug}`)
-                .then(({data}) => {
+                .then(({ data }) => {
                     setPost(data);
                 })
                 .catch(() => {
@@ -48,7 +44,6 @@ export default function PostForm() {
         ev.preventDefault();
 
         const data = new FormData();
-        // Append file to the formData object here
         data.append("id", post.id);
         data.append("title", post.title);
         data.append("excerpt", post.excerpt);
@@ -62,7 +57,6 @@ export default function PostForm() {
         });
         data.append("tags", arr);
 
-        // If post ID exists we'll update the existing post.
         if (post.id) {
             data.append('_method', 'PUT');
 
@@ -70,28 +64,14 @@ export default function PostForm() {
                 .then(() => {
                     navigate(`/post/${post.slug}`);
                 })
-            // .catch(err => {
-            //     const response = err.response;
-            //     if (response && response.status === 422) {
-            //         setErrors(response.data.errors)
-            //     }
-            // })
-            // else we'll create a new post
         } else {
             axiosClient.post('/posts', data)
-                .then(({data}) => {
+                .then(({ data }) => {
                     navigate(`/post/${data.slug}`);
                 })
-            // .catch(err => {
-            // todo need to add error handling
-            //     const response = err.response;
-            //     if (response && response.status === 422) {
-            //         setErrors(response.data.errors)
-            //     }
-            // })
         }
     }
-    // Delete post by slug
+
     function deletePost() {
         axiosClient.delete(`/posts/${post.slug}`)
             .then(() => {
@@ -100,33 +80,28 @@ export default function PostForm() {
     }
 
     const selectFile = (ev) => {
-
-        setPost({...post, image: ev.target.files[0]});
+        setPost({ ...post, image: ev.target.files[0] });
     }
 
     const onAddSelect = (selectedOption) => {
-
-        setPost({...post, tags: selectedOption})
+        setPost({ ...post, tags: selectedOption })
     }
 
-
     return (
-
         <div>
             {post.id ? <h1>Edit Post: {post.title}</h1> : <h1>New Post</h1>}
 
             <Form onSubmit={onSubmit}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
-
                     <FloatingLabel
                         controlId="floatingTextarea"
                         label="Title"
                         className="mb-3"
                     >
                         <Form.Control
-                            value={post.title} onChange={ev => setPost({...post, title: ev.target.value})}
+                            value={post.title} onChange={ev => setPost({ ...post, title: ev.target.value })}
                             as="textarea"
-                            placeholder="Leave a comment here"/>
+                            placeholder="Leave a comment here" />
                     </FloatingLabel>
 
                     <FloatingLabel
@@ -135,31 +110,30 @@ export default function PostForm() {
                         className="mb-3"
                     >
                         <Form.Control
-                            value={post.excerpt} onChange={ev => setPost({...post, excerpt: ev.target.value})}
+                            value={post.excerpt} onChange={ev => setPost({ ...post, excerpt: ev.target.value })}
                             as="textarea"
-                            placeholder="Leave a comment here"/>
+                            placeholder="Leave a comment here" />
                     </FloatingLabel>
-
-
                 </Form.Group>
+
                 <Form.Group controlId="formContent" className="mb-3">
                     <Form.Label>Content</Form.Label>
                     <CustomEditor
                         value={post.content}
-                        onChange={ev => setPost({...post, content: ev.target.value})}
+                        onChange={ev => setPost({ ...post, content: ev.target.value })}
                     />
                 </Form.Group>
-                {/*Adds the tags to the post*/}
+
                 <Form.Group>
                     <Form.Label>Tags</Form.Label>
                     <CreatableSelect
-                        // defaultValue={post.tags}
                         value={post.tags}
                         onChange={onAddSelect}
                         options={allTags}
                         isMulti={true}
                     />
                 </Form.Group>
+
                 <Form.Group controlId="formFile" className="mb-3">
                     <Form.Label>Upload Image</Form.Label>
                     <Form.Control
@@ -172,13 +146,12 @@ export default function PostForm() {
                     {post.id ? 'Edit Post' : 'New Post'}
                 </Button>
 
+                {post.id &&
+                    <Button variant="danger" type="deleteBtn" style={{ marginLeft: '0.5rem' }} onClick={deletePost}>
+                        Delete Post
+                    </Button>
+                }
             </Form>
-
-            {post.id &&
-                <Button variant="danger" type="deleteBtn" style={{ marginLeft: '0.5rem' }} onClick={deletePost}>
-                    Delete Post
-                </Button>
-            }
         </div>
     )
 }
