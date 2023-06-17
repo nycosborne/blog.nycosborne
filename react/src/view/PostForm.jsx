@@ -91,6 +91,13 @@ export default function PostForm() {
             // })
         }
     }
+    // Delete post by slug
+    function deletePost() {
+        axiosClient.delete(`/posts/${post.slug}`)
+            .then(() => {
+                navigate(`/`);
+            })
+    }
 
     const selectFile = (ev) => {
 
@@ -102,23 +109,6 @@ export default function PostForm() {
         setPost({...post, tags: selectedOption})
     }
 
-    // Based on post.id we'll either show the edit post form or the new post form.
-    const  submitBtnWithPostStatus = () => {
-        if(post.id) {
-            return(
-                <Button variant="primary" type="submit">
-                    Edit Post
-                </Button>
-            )
-        } else {
-            return(
-                <Button variant="primary" type="submit">
-                    New Post
-                </Button>
-            )
-        }
-
-    }
 
     return (
 
@@ -181,7 +171,14 @@ export default function PostForm() {
                 <Button variant="primary" type="submit">
                     {post.id ? 'Edit Post' : 'New Post'}
                 </Button>
+
             </Form>
+
+            {post.id &&
+                <Button variant="danger" type="deleteBtn" style={{ marginLeft: '0.5rem' }} onClick={deletePost}>
+                    Delete Post
+                </Button>
+            }
         </div>
     )
 }

@@ -129,4 +129,17 @@ class PostController extends Controller
 
     }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Post  $post
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Post $post)
+    {
+        $post->delete();
+
+        return response(null, Response::HTTP_NO_CONTENT);
+    }
+
 }
