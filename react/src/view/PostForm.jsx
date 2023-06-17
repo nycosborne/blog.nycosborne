@@ -102,11 +102,29 @@ export default function PostForm() {
         setPost({...post, tags: selectedOption})
     }
 
+    // Based on post.id we'll either show the edit post form or the new post form.
+    const  submitBtnWithPostStatus = () => {
+        if(post.id) {
+            return(
+                <Button variant="primary" type="submit">
+                    Edit Post
+                </Button>
+            )
+        } else {
+            return(
+                <Button variant="primary" type="submit">
+                    New Post
+                </Button>
+            )
+        }
+
+    }
+
     return (
 
         <div>
-            {post.id && <h1>Edit Post: {post.title}</h1>}
-            {!post.id && <h1>New Post</h1>}
+            {post.id ? <h1>Edit Post: {post.title}</h1> : <h1>New Post</h1>}
+
             <Form onSubmit={onSubmit}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
 
@@ -161,7 +179,7 @@ export default function PostForm() {
                 </Form.Group>
 
                 <Button variant="primary" type="submit">
-                    Submit
+                    {post.id ? 'Edit Post' : 'New Post'}
                 </Button>
             </Form>
         </div>
