@@ -22,8 +22,12 @@ export default function ListPost() {
             .then(({data}) => {
                 setPosts((prevPosts) => prevPosts.filter((post) => post.slug !== slug));
             }).catch(() => {
-                console.log("Error deleting post");
+            console.log("Error deleting post");
         })
+    }
+
+    const editPost = (slug) => {
+
     }
 
     //Loop through the posts and display in rows
@@ -31,9 +35,11 @@ export default function ListPost() {
         <Row key={p.id} className="mb-3">
             <Col>{p.title}</Col>
             <Col>
-                <Button variant="primary" type="edit_post">
-                    Edit Post
-                </Button>
+                <a style={{textDecoration: 'none', color: '#fff'}} href={'/post/edit/' + p.slug}>
+                    <Button variant="primary" type="edit_post">
+                        Edit Post
+                    </Button>
+                </a>
             </Col>
             <Col>
                 <Button variant="primary" type="deletePost" onClick={() => deletePost(p.slug)}>
