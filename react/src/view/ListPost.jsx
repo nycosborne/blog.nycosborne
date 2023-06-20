@@ -33,7 +33,7 @@ export default function ListPost() {
     //Loop through the posts and display in rows
     const listPosts = posts.map((p) => (
         <Row key={p.id} className="mb-3">
-            <Col>{p.title}</Col>
+            <Col> <a href={'/post/' + p.slug}>{p.title}</a></Col>
             <Col>
                 <a style={{textDecoration: 'none', color: '#fff'}} href={'/post/edit/' + p.slug}>
                     <Button variant="primary" type="edit_post">
