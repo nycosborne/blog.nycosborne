@@ -43,7 +43,6 @@ class PostController extends Controller
             //todo would like to determine why my liter hates this $request->content
             // this might just be a thing, or maybe I need a plugin
             'content' => $request->content,
-            'category_id' => $request->category_id,
             'title' => $request->title,
             'slug' => $request->title, //Slug attribute is dynamically build from post title
             'image' => $fileName

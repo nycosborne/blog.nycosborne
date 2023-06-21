@@ -21,8 +21,8 @@ class Post extends Model
         'title',
         'excerpt',
         'content',
+        "created_at",
         'excerpt',
-        'category_id',
         'slug',
         'image'
     ];

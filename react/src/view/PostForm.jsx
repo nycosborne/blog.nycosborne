@@ -20,6 +20,7 @@ export default function PostForm() {
     });
 
     const [allTags, setAllTags] = useState([]);
+    const [errors, setErrors] = useState([])
 
     useEffect(() => {
         axiosClient.get('/tags')
@@ -68,7 +69,19 @@ export default function PostForm() {
             axiosClient.post('/posts', data)
                 .then(({ data }) => {
                     navigate(`/post/${data.slug}`);
-                })
+                }).catch((error) => {
+
+                const response = error.response
+                if (response && response.status === 422) {
+                    if(response.data.error) {
+                        setErrors(response.data.errors)
+                    }else {
+                        setErrors({
+                            error: [response.data.message]
+                        })
+                    }
+                }
+            })
         }
     }
 
@@ -90,7 +103,15 @@ export default function PostForm() {
     return (
         <div>
             {post.id ? <h1>Edit Post: {post.title}</h1> : <h1>New Post</h1>}
-
+            {errors && <div style={{background: "lightpink"}}>
+                <ul>
+                    {Object.keys(errors).map(key => (
+                        <li key={key}>{errors[key][0]}</li>
+                    ))
+                    }
+                </ul>
+            </div>
+            }
             <Form onSubmit={onSubmit}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <FloatingLabel
