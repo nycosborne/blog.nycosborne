@@ -53,24 +53,26 @@ export default function Posts() {
                                 <Card.Img style={{borderRadius: '50%'}} src="/images/headshoot_300X300.gif"/>
                             </Col>
                             <Col xs={10} style={{fontSize: '1.25rem'}}>
-                                    <p>Hello, I'm Dan from New York 🗽</p>
-                                    <p>I’m a full-stack engineer passionate about building useful things with clean code!</p>
-                                    <p>I’ve been building and maintaining monolithic and serverless enterprise applications
-                                        for 5+ years. Strong knowledge of PHP, Python, Laravel, Node.js, Reach.js, Java,
-                                        relational, and NoSQL databases. AWS certification.</p>
-                                    <p>Happiest ❤️ when working closely with others.</p>
-                             </Col>
+                                <p>Hello, I'm Dan from New York 🗽</p>
+                                <p>I’m a full-stack engineer passionate about building useful things with clean
+                                    code!</p>
+                                <p>I’ve been building and maintaining monolithic and serverless enterprise applications
+                                    for 5+ years. Strong knowledge of PHP, Python, Laravel, Node.js, Reach.js, Java,
+                                    relational, and NoSQL databases. AWS certification.</p>
+                                <p>Happiest ❤️ when working closely with others.</p>
+                            </Col>
                         </Row>
                     </Row>
                 }
-                <Row className={'justify-content-around'} >
+                <Row className={'justify-content-around'}>
                     {
                         posts.map(p => (
                             <Col md="auto" key={p.id}>
                                 <a style={{textDecoration: 'none', color: '#fff'}} href={'/post/' + p.slug}>
                                     <Card>
-                                        {/*<Card.Img variant="top" src="http://localhost:8000/uploads/1675789169.gif"/>*/}
-                                        <Card.Img variant="top" src={baseUrl + "/uploads/" + p.image}/>
+                                        {p.image &&
+                                            <Card.Img variant="top" src={baseUrl + "/uploads/" + p.image}/>
+                                        }
                                         <Card.Body>
                                             <Card.Text style={{color: '#ffffff8c'}}>{p.created}</Card.Text>
                                             <Card.Title>{p.title}</Card.Title>

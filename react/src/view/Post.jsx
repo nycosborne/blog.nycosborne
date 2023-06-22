@@ -44,13 +44,15 @@ export default function Post() {
                             </Col>
                         </Row>
                         <Row md="auto" className={'justify-content-around'}>
-                            <Card.Img style={{
-                                maxWidth: '400px',
-                                marginTop: '50px',
-                                marginBottom: '40px',
-                                padding: '0px',
-                                boxShadow: 'rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px'
-                            }} src={baseUrl + "/uploads/" + post.image}/>
+                            {post.image &&
+                                <Card.Img style={{
+                                    maxWidth: '400px',
+                                    marginTop: '50px',
+                                    marginBottom: '40px',
+                                    padding: '0px',
+                                    boxShadow: 'rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px'
+                                }} src={baseUrl + "/uploads/" + post.image}/>
+                            }
                         </Row>
                     </Col>
                 </Row>

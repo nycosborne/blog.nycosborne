@@ -42,7 +42,7 @@ export default function ListPost() {
                 </a>
             </Col>
             <Col>
-                <Button variant="primary" type="deletePost" onClick={() => deletePost(p.slug)}>
+                <Button variant={"danger"} type="deletePost" onClick={() => deletePost(p.slug)}>
                     Delete Post
                 </Button>
             </Col>

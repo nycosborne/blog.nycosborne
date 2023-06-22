@@ -1,13 +1,13 @@
-import { useNavigate, useParams } from "react-router-dom";
-import React, { useEffect, useState } from "react";
+import {useNavigate, useParams} from "react-router-dom";
+import React, {useEffect, useState} from "react";
 import axiosClient from "../axios-client.js";
-import { Button, FloatingLabel, Form } from "react-bootstrap";
+import {Button, FloatingLabel, Form} from "react-bootstrap";
 import CustomEditor from "../components/CustomEditor.jsx";
 import CreatableSelect from 'react-select/creatable';
 
 export default function PostForm() {
     const navigate = useNavigate();
-    let { post_slug } = useParams();
+    let {post_slug} = useParams();
 
     const [post, setPost] = useState({
         id: null,
@@ -24,7 +24,7 @@ export default function PostForm() {
 
     useEffect(() => {
         axiosClient.get('/tags')
-            .then(({ data }) => {
+            .then(({data}) => {
                 setAllTags(data.data);
             })
     }, [])
@@ -32,7 +32,7 @@ export default function PostForm() {
     if (post_slug) {
         useEffect(() => {
             axiosClient.get(`/posts/${post_slug}`)
-                .then(({ data }) => {
+                .then(({data}) => {
                     setPost(data);
                 })
                 .catch(() => {
@@ -43,7 +43,6 @@ export default function PostForm() {
 
     function onSubmit(ev) {
         ev.preventDefault();
-
         const data = new FormData();
         data.append("id", post.id);
         data.append("title", post.title);
@@ -51,7 +50,9 @@ export default function PostForm() {
         data.append("content", post.content);
         data.append("created", post.created);
         data.append("slug", post.slug);
-        data.append("image", post.image);
+        if (post.image) {
+            data.append("image", post.image);
+        }
         let arr = []
         Object.values(post.tags).forEach(val => {
             arr.push(val.value)
@@ -67,15 +68,15 @@ export default function PostForm() {
                 })
         } else {
             axiosClient.post('/posts', data)
-                .then(({ data }) => {
+                .then(({data}) => {
                     navigate(`/post/${data.slug}`);
                 }).catch((error) => {
 
                 const response = error.response
                 if (response && response.status === 422) {
-                    if(response.data.error) {
+                    if (response.data.error) {
                         setErrors(response.data.errors)
-                    }else {
+                    } else {
                         setErrors({
                             error: [response.data.message]
                         })
@@ -93,11 +94,11 @@ export default function PostForm() {
     }
 
     const selectFile = (ev) => {
-        setPost({ ...post, image: ev.target.files[0] });
+        setPost({...post, image: ev.target.files[0]});
     }
 
     const onAddSelect = (selectedOption) => {
-        setPost({ ...post, tags: selectedOption })
+        setPost({...post, tags: selectedOption})
     }
 
     return (
@@ -120,9 +121,9 @@ export default function PostForm() {
                         className="mb-3"
                     >
                         <Form.Control
-                            value={post.title} onChange={ev => setPost({ ...post, title: ev.target.value })}
+                            value={post.title} onChange={ev => setPost({...post, title: ev.target.value})}
                             as="textarea"
-                            placeholder="Leave a comment here" />
+                            placeholder="Leave a comment here"/>
                     </FloatingLabel>
 
                     <FloatingLabel
@@ -131,9 +132,9 @@ export default function PostForm() {
                         className="mb-3"
                     >
                         <Form.Control
-                            value={post.excerpt} onChange={ev => setPost({ ...post, excerpt: ev.target.value })}
+                            value={post.excerpt} onChange={ev => setPost({...post, excerpt: ev.target.value})}
                             as="textarea"
-                            placeholder="Leave a comment here" />
+                            placeholder="Leave a comment here"/>
                     </FloatingLabel>
                 </Form.Group>
 
@@ -141,7 +142,7 @@ export default function PostForm() {
                     <Form.Label>Content</Form.Label>
                     <CustomEditor
                         value={post.content}
-                        onChange={ev => setPost({ ...post, content: ev.target.value })}
+                        onChange={ev => setPost({...post, content: ev.target.value})}
                     />
                 </Form.Group>
 
@@ -168,7 +169,7 @@ export default function PostForm() {
                 </Button>
 
                 {post.id &&
-                    <Button variant="danger" type="deleteBtn" style={{ marginLeft: '0.5rem' }} onClick={deletePost}>
+                    <Button variant="danger" type="deleteBtn" style={{marginLeft: '0.5rem'}} onClick={deletePost}>
                         Delete Post
                     </Button>
                 }
