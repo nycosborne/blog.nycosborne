@@ -12,6 +12,7 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
+        "react-gist": "^1.2.4",
         "react-simple-wysiwyg": "^2.2.5"
     }
 }

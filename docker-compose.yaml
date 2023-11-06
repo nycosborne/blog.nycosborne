@@ -13,6 +13,23 @@ services:
       dockerfile: ./docker/php/Dockerfile
     volumes:
       - ./:/var/www/html
-    depends_on:
-      - db
+  node:
+    build:
+      context: .
+      dockerfile: ./docker/node/node.Dockerfile
+    volumes:
+      - ./:/var/www/html
+  mysql:
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./docker/mysql/data:/var/lib/mysql
+    #    todo: try and used only the exisiting .env file
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: laravel
+      MYSQL_USER: laravel_user
+      MYSQL_PASSWORD: laravel_pass
+
 
