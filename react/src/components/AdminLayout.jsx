@@ -10,7 +10,7 @@ import axiosClient from "../axios-client.js";
 
 function AdminLayout() {
 
-    const {setUser,token} = useStateContext();
+    const {setUser, token} = useStateContext();
 
     const styles = {
         container: {
@@ -37,12 +37,12 @@ function AdminLayout() {
 
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         axiosClient.get('/user')
-            .then(({data})=>{
+            .then(({data}) => {
                 setUser(data)
             })
-    },[])
+    }, [])
 
     if (!token) {
         return <Navigate to='/login'/>
@@ -52,22 +52,22 @@ function AdminLayout() {
         <div>
             <NavBar/>
             <Container fluid>
-            <Row>
-                <Col xs={4} sm={4} md={4} lg={4} style={ styles.left }>
-                    <Row><Link to="/dashboard">Dashboard</Link></Row>
-                    <Row><Link to="/users">Users</Link></Row>
-                    <Row><Link to="/posts/list">Posts</Link></Row>
-                    <Row><Link to="/post/new">New Posts</Link></Row>
-                </Col>
+                <Row>
+                    <Col xs={4} sm={4} md={4} lg={4} style={styles.left}>
+                        {/*todo: add links to admin pages*/}
+                        {/*<Row><Link to="/dashboard">Dashboard</Link></Row>*/}
+                        {/*<Row><Link to="/users">Users</Link></Row>*/}
+                        <Row><Link to="/posts/list">Posts</Link></Row>
+                        <Row><Link to="/post/new">New Posts</Link></Row>
+                    </Col>
 
-                <Col style={ styles.right }>
-                    <Outlet/>
-                </Col>
+                    <Col style={styles.right}>
+                        <Outlet/>
+                    </Col>
 
-            </Row>
+                </Row>
             </Container>
         </div>
-
 
 
     );
