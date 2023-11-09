@@ -1,27 +1,43 @@
-FROM php:7.4-fpm
+# Stage 1: Composer
+FROM composer:2 AS composer
+WORKDIR /app
+COPY . /app
+RUN composer install --no-interaction --optimize-autoloader
 
-# Arguments defined in docker-compose.yml
-ARG user
-ARG uid
+# Stage 2: PHP
+FROM php:8.1-alpine
 
-# Install system dependencies
-RUN apt-get update -y && apt-get install -y libicu-dev unzip zip libzip-dev libpng-dev libjpeg-dev libfreetype6-dev libonig-dev libxml2-dev libpq-dev
+# Install system dependencies using apk
+RUN apk --update add \
+    icu-dev \
+    unzip \
+    zip \
+    libzip-dev \
+    libpng-dev \
+    jpeg-dev \
+    freetype-dev \
+    oniguruma-dev \
+    libxml2-dev \
+    postgresql-dev
 
 # Clear cache
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN rm -rf /var/cache/apk/*
 
 # Install PHP extensions
 RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 
-# Get latest Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# Set the working directory to the Laravel application root
+WORKDIR /var/www/html
 
-# Create system user to run Composer and Artisan Commands
-RUN useradd -G www-data,root -u $uid -d /home/$user $user
-RUN mkdir -p /home/$user/.composer && \
-    chown -R $user:$user /home/$user
+# Copy files from the Composer stage
+COPY --from=composer /app /var/www/html
 
-# Set working directory
-WORKDIR /var/www
+# Set permissions for Laravel storage and bootstrap/cache directories
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
-USER $user
+# Expose port 8000 (adjust as needed)
+EXPOSE 8000
+
+# Start Laravel application
+CMD php artisan serve --host=0.0.0.0 --port=8000
