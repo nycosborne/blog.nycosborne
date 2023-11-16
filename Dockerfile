@@ -5,29 +5,36 @@ COPY . /app
 RUN composer install --no-interaction --optimize-autoloader
 
 # Stage 2: PHP
-FROM php:8.1-alpine
+FROM php:8.1-apache
 
-# Install system dependencies using apk
-RUN apk --update add \
-    icu-dev \
-    unzip \
-    zip \
-    libzip-dev \
-    libpng-dev \
-    jpeg-dev \
-    freetype-dev \
-    oniguruma-dev \
-    libxml2-dev \
-    postgresql-dev
-
-# Clear cache
-RUN rm -rf /var/cache/apk/*
-
-# Install PHP extensions
-RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 
 # Set the working directory to the Laravel application root
 WORKDIR /var/www/html
+# Mod Rewrite
+RUN a2enmod rewrite
+
+# Linux Library
+RUN apt-get update -y && apt-get install -y \
+    libicu-dev \
+    libmariadb-dev \
+    unzip zip \
+    zlib1g-dev \
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    libjpeg62-turbo-dev \
+    libpng-dev
+
+RUN echo "mysqli.default_socket = /var/run/mysqld/mysqld.sock" >> /usr/local/etc/php/conf.d/docker-php-ext-mysqli.ini
+
+# Composer
+COPY --from=composer /usr/bin/composer /usr/bin/composer
+
+# PHP Extension
+RUN docker-php-ext-install gettext intl pdo_mysql gd
+
+RUN docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg \
+    && docker-php-ext-install -j$(nproc) gd
 
 # Copy files from the Composer stage
 COPY --from=composer /app /var/www/html
