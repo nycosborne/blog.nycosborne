@@ -38,7 +38,6 @@ services:
             MYSQL_USER: "dan"
             MYSQL_PASSWORD: "root"
             MYSQL_ROOT_PASSWORD: "root"
-#            DB_SOCKET_PATH: "/var/run/mysqld/mysqld.sock"
         networks:
             - app
 
