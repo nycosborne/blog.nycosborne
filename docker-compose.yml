@@ -1,0 +1,46 @@
+version: "3.7"
+services:
+    php:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - "8000:8000"
+        volumes:
+            - .:/var/www/html:rw
+        env_file:
+            - .env
+        networks:
+            - app
+    node:
+        build:
+            context: react
+            dockerfile: Dockerfile
+        tty: true
+        ports:
+            - "3000:3000"
+        volumes:
+            - ./react/src:/app/src:ro
+        env_file:
+            - ./react/.env
+        networks:
+            - app
+    db:
+        image: mysql:5.7
+        ports:
+            - "3306:3306"
+        volumes:
+            - ./mysql:/var/lib/mysql
+        env_file:
+            - .env
+        environment:
+            MYSQL_DATABASE: "blog_nycosborne"
+            MYSQL_USER: "dan"
+            MYSQL_PASSWORD: "root"
+            MYSQL_ROOT_PASSWORD: "root"
+        networks:
+            - app
+
+networks:
+    app:
+        driver: bridge
