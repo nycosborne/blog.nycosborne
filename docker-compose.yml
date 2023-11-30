@@ -33,11 +33,11 @@ services:
             - ./mysql:/var/lib/mysql
         env_file:
             - .env
-#        environment:
-#            MYSQL_DATABASE: "blog_nycosborne"
-#            MYSQL_USER: "dan"
-#            MYSQL_PASSWORD: "root"
-#            MYSQL_ROOT_PASSWORD: "root"
+        environment:
+            MYSQL_DATABASE: "blog_nycosborne"
+            MYSQL_USER: "dan"
+            MYSQL_PASSWORD: "root"
+            MYSQL_ROOT_PASSWORD: "root"
 #            DB_SOCKET_PATH: "/var/run/mysqld/mysqld.sock"
         networks:
             - app
