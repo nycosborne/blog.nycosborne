@@ -26,7 +26,8 @@ services:
         networks:
             - app
     db:
-        image: mysql:5.7
+        image: biarms/mysql:5.7
+        platform: linux/arm64
         ports:
             - "3306:3306"
         volumes:
