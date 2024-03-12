@@ -8,6 +8,7 @@ use App\Http\Resources\PostResource;
 use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Http\Response;
+use App\Services\PostService;
 
 class PostController extends Controller
 {
@@ -28,7 +29,7 @@ class PostController extends Controller
      * @param CreatePost $request
      * @return Response
      */
-    public function store(CreatePost $request)
+    public function store(CreatePost $request, PostService $postService)
     {
 
         $data = $request->validated();
@@ -47,6 +48,9 @@ class PostController extends Controller
             'slug' => $request->title, //Slug attribute is dynamically build from post title
             'image' => $fileName
         ]);
+
+        //Repost to Reddit after creating a new post
+        $postService->repostToReddit($post);
 
         foreach (explode(",", $request->tags) as $tagCheck) {
             // Check if this is a new tag
