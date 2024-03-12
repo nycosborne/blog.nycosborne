@@ -31,4 +31,9 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+
+    'reposter' => [
+        'reddit' => env('REDDIT_API_URL'),
+    ],
+
 ];

@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Models\Post;
+
+
 define("LINK_TO_POST", "https://nycosborne.com/post/");
 
 /**
@@ -24,8 +26,8 @@ class PostService
                 "body" => $post->content,
                 "link" => LINK_TO_POST . $post->slug
             ];
-
-            $url = 'https://wguky0xl8b.execute-api.us-east-1.amazonaws.com/demo_lam';
+            // Send the post to Reddit
+            $url = config('services.reposter.reddit');
             $ch = curl_init($url);
             $jsonData = json_encode($postDate);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);
@@ -37,7 +39,6 @@ class PostService
         } catch (\Exception $e) {
             // Log the error message
             error_log($e->getMessage());
-            // Return false or a custom error message
             return false;
         }
     }
