@@ -1,7 +1,7 @@
 import {useNavigate, useParams} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import axiosClient from "../axios-client.js";
-import {Button, FloatingLabel, Form} from "react-bootstrap";
+import {Button, Container, FloatingLabel, Form, Col} from "react-bootstrap";
 import CustomEditor from "../components/CustomEditor.jsx";
 import CreatableSelect from 'react-select/creatable';
 import LexicalEditor from "../components/LexicalEditor.jsx";
@@ -111,80 +111,85 @@ export default function PostForm() {
     }
 
     return (
-        <div>
-            {post.id ? <h1>Edit Post: {post.title}</h1> : <h1>New Post</h1>}
-            {errors && <div style={{background: "lightpink"}}>
-                <ul>
-                    {Object.keys(errors).map(key => (
-                        <li key={key}>{errors[key][0]}</li>
-                    ))
+        <Container>
+            <Col className={'justify-content-around'}>
+                <div>
+                    {post.id ? <h1>Edit Post: {post.title}</h1> : <h1>New Post</h1>}
+                    {errors && <div style={{background: "lightpink"}}>
+                        <ul>
+                            {Object.keys(errors).map(key => (
+                                <li key={key}>{errors[key][0]}</li>
+                            ))
+                            }
+                        </ul>
+                    </div>
                     }
-                </ul>
-            </div>
-            }
-            <Form onSubmit={onSubmit}>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <FloatingLabel
-                        controlId="floatingTextarea"
-                        label="Title"
-                        className="mb-3"
-                    >
-                        <Form.Control
-                            value={post.title} onChange={ev => setPost({...post, title: ev.target.value})}
-                            as="textarea"
-                            placeholder="Leave a comment here"/>
-                    </FloatingLabel>
+                    <Form onSubmit={onSubmit}>
+                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                            <FloatingLabel
+                                controlId="floatingTextarea"
+                                label="Title"
+                                className="mb-3"
+                            >
+                                <Form.Control
+                                    value={post.title} onChange={ev => setPost({...post, title: ev.target.value})}
+                                    as="textarea"
+                                    placeholder="Leave a comment here"/>
+                            </FloatingLabel>
 
-                    <FloatingLabel
-                        controlId="floatingTextarea"
-                        label="Excerpt"
-                        className="mb-3"
-                    >
-                        <Form.Control
-                            value={post.excerpt} onChange={ev => setPost({...post, excerpt: ev.target.value})}
-                            as="textarea"
-                            placeholder="Leave a comment here"/>
-                    </FloatingLabel>
-                </Form.Group>
+                            <FloatingLabel
+                                controlId="floatingTextarea"
+                                label="Excerpt"
+                                className="mb-3"
+                            >
+                                <Form.Control
+                                    value={post.excerpt} onChange={ev => setPost({...post, excerpt: ev.target.value})}
+                                    as="textarea"
+                                    placeholder="Leave a comment here"/>
+                            </FloatingLabel>
+                        </Form.Group>
 
-                <Form.Group controlId="formContent" className="mb-3 content-editable_wrapper">
-                    <Form.Label>Content</Form.Label>
-                    {/*<CustomEditor*/}
-                    {/*    value={post.content}*/}
-                    {/*    onChange={ev => setPost({...post, content: ev.target.value})}*/}
-                    {/*/>*/}
-                    <LexicalEditor setContent={setContent}/>
+                        <Form.Group controlId="formContent" className="mb-3 content-editable_wrapper">
+                            <Form.Label>Content</Form.Label>
+                            {/*<CustomEditor*/}
+                            {/*    value={post.content}*/}
+                            {/*    onChange={ev => setPost({...post, content: ev.target.value})}*/}
+                            {/*/>*/}
+                            <LexicalEditor setContent={setContent}/>
 
-                </Form.Group>
+                        </Form.Group>
 
-                <Form.Group>
-                    <Form.Label>Tags</Form.Label>
-                    <CreatableSelect
-                        value={post.tags}
-                        onChange={onAddSelect}
-                        options={allTags}
-                        isMulti={true}
-                    />
-                </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Tags</Form.Label>
+                            <CreatableSelect
+                                value={post.tags}
+                                onChange={onAddSelect}
+                                options={allTags}
+                                isMulti={true}
+                            />
+                        </Form.Group>
 
-                <Form.Group controlId="formFile" className="mb-3">
-                    <Form.Label>Upload Image</Form.Label>
-                    <Form.Control
-                        type="file"
-                        onChange={ev => selectFile(ev)}
-                    />
-                </Form.Group>
+                        <Form.Group controlId="formFile" className="mb-3">
+                            <Form.Label>Upload Image</Form.Label>
+                            <Form.Control
+                                type="file"
+                                onChange={ev => selectFile(ev)}
+                            />
+                        </Form.Group>
 
-                <Button variant="primary" type="submit">
-                    {post.id ? 'Edit Post' : 'New Post'}
-                </Button>
+                        <Button variant="primary" type="submit">
+                            {post.id ? 'Edit Post' : 'New Post'}
+                        </Button>
 
-                {post.id &&
-                    <Button variant="danger" type="deleteBtn" style={{marginLeft: '0.5rem'}} onClick={deletePost}>
-                        Delete Post
-                    </Button>
-                }
-            </Form>
-        </div>
+                        {post.id &&
+                            <Button variant="danger" type="deleteBtn" style={{marginLeft: '0.5rem'}}
+                                    onClick={deletePost}>
+                                Delete Post
+                            </Button>
+                        }
+                    </Form>
+                </div>
+            </Col>
+        </Container>
     )
 }
