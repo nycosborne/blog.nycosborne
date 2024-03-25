@@ -6,6 +6,7 @@ import CustomEditor from "../components/CustomEditor.jsx";
 import CreatableSelect from 'react-select/creatable';
 import LexicalEditor from "../components/LexicalEditor.jsx";
 
+
 export default function PostForm() {
     const navigate = useNavigate();
     let {post_slug} = useParams();
@@ -44,6 +45,7 @@ export default function PostForm() {
 
     function onSubmit(ev) {
         ev.preventDefault();
+
         const data = new FormData();
         data.append("id", post.id);
         data.append("title", post.title);
@@ -51,6 +53,7 @@ export default function PostForm() {
         data.append("content", post.content);
         data.append("created", post.created);
         data.append("slug", post.slug);
+
         if (post.image) {
             data.append("image", post.image);
         }
@@ -98,6 +101,11 @@ export default function PostForm() {
         setPost({...post, image: ev.target.files[0]});
     }
 
+    // This function sets content of the post state
+    const setContent = (content) => {
+        setPost({...post, content: content})
+    }
+
     const onAddSelect = (selectedOption) => {
         setPost({...post, tags: selectedOption})
     }
@@ -139,13 +147,14 @@ export default function PostForm() {
                     </FloatingLabel>
                 </Form.Group>
 
-                <Form.Group controlId="formContent" className="mb-3">
+                <Form.Group controlId="formContent" className="mb-3 content-editable_wrapper">
                     <Form.Label>Content</Form.Label>
-                    <CustomEditor
-                        value={post.content}
-                        onChange={ev => setPost({...post, content: ev.target.value})}
-                    />
-                    <LexicalEditor/>
+                    {/*<CustomEditor*/}
+                    {/*    value={post.content}*/}
+                    {/*    onChange={ev => setPost({...post, content: ev.target.value})}*/}
+                    {/*/>*/}
+                    <LexicalEditor setContent={setContent}/>
+
                 </Form.Group>
 
                 <Form.Group>

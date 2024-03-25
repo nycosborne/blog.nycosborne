@@ -1,5 +1,5 @@
 import {$getRoot, $getSelection} from 'lexical';
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 
 import {AutoFocusPlugin} from '@lexical/react/LexicalAutoFocusPlugin';
 import {LexicalComposer} from '@lexical/react/LexicalComposer';
@@ -7,6 +7,8 @@ import {RichTextPlugin} from '@lexical/react/LexicalRichTextPlugin';
 import {ContentEditable} from '@lexical/react/LexicalContentEditable';
 import {HistoryPlugin} from '@lexical/react/LexicalHistoryPlugin';
 import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary';
+import {useLexicalComposerContext} from "@lexical/react/LexicalComposerContext";
+import {OnChangePlugin} from "@lexical/react/LexicalOnChangePlugin";
 
 const theme = {}
 
@@ -17,22 +19,36 @@ function onError(error) {
     console.error(error);
 }
 
-export default function Editor() {
+export default function Editor(props) {
     const initialConfig = {
         namespace: 'MyEditor',
         theme,
         onError,
     };
 
+    const [editorState, setEditorState] = useState();
+
+    function onChange(editorState) {
+        setEditorState(editorState);
+        console.log(editorState);
+        editorState._nodeMap.forEach((node) => {
+            if (node.__type === 'text') {
+                props.setContent(node.__text);
+            }
+        });
+    }
+
     return (
         <LexicalComposer initialConfig={initialConfig}>
             <RichTextPlugin
-                contentEditable={<ContentEditable />}
-                placeholder={<div>Enter some text...</div>}
+                contentEditable={<ContentEditable className={'content-editable'}/>}
+                placeholder={<div className={'content-editable_placeholder'}>
+                    Compose, Compose, Compose!!!</div>}
                 ErrorBoundary={LexicalErrorBoundary}
             />
-            <HistoryPlugin />
-            <AutoFocusPlugin />
+            <HistoryPlugin/>
+            <AutoFocusPlugin/>
+            <OnChangePlugin onChange={onChange}/>
         </LexicalComposer>
     );
 }
