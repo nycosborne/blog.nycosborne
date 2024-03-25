@@ -9,8 +9,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@lexical/react": "^0.14.2",
     "axios": "^1.2.3",
     "bootstrap": "^5.2.3",
+    "lexical": "^0.14.2",
     "quill": "^1.3.7",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.0",

@@ -4,6 +4,7 @@ import axiosClient from "../axios-client.js";
 import {Button, FloatingLabel, Form} from "react-bootstrap";
 import CustomEditor from "../components/CustomEditor.jsx";
 import CreatableSelect from 'react-select/creatable';
+import LexicalEditor from "../components/LexicalEditor.jsx";
 
 export default function PostForm() {
     const navigate = useNavigate();
@@ -144,6 +145,7 @@ export default function PostForm() {
                         value={post.content}
                         onChange={ev => setPost({...post, content: ev.target.value})}
                     />
+                    <LexicalEditor/>
                 </Form.Group>
 
                 <Form.Group>
