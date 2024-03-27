@@ -8,11 +8,10 @@ import {HistoryPlugin} from '@lexical/react/LexicalHistoryPlugin';
 import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary';
 import {useLexicalComposerContext} from "@lexical/react/LexicalComposerContext";
 import {OnChangePlugin} from "@lexical/react/LexicalOnChangePlugin";
-import {HeadingNode, $createHeadingNode} from "@lexical/rich-text";
-import {$getRoot, $createTextNode, $getSelection, $isRangeSelection} from 'lexical';
-import {$setBlocksType} from "@lexical/selection"
+import {HeadingNode} from "@lexical/rich-text";
 import {ListPlugin} from "@lexical/react/LexicalListPlugin";
-import {INSERT_ORDERED_LIST_COMMAND, INSERT_UNORDERED_LIST_COMMAND, ListItemNode, ListNode} from "@lexical/list";
+import {ListItemNode, ListNode} from "@lexical/list";
+import {ToolbarPlugin} from "./editor/Toolbar.jsx";
 
 
 const theme = {
@@ -32,68 +31,6 @@ const theme = {
 function onError(error) {
     console.error(error);
 }
-
-function PrintsToEditor() {
-    const [editor] = useLexicalComposerContext();
-    const onClick = (e) => {
-        e.preventDefault()
-        editor.update((editorState) => {
-            const root = $getRoot(editor);
-            root.append($createHeadingNode('h1').append($createTextNode('Hello World')));
-        });
-    }
-    return <button type="button" onClick={onClick}>Heading</button>
-}
-
-function HeadingTag() {
-    const [editor] = useLexicalComposerContext();
-
-    const onClick = (tag) => {
-        editor.update((editorState) => {
-            const selection = $getSelection();
-            if ($isRangeSelection(selection)) {
-                $setBlocksType(selection, () => $createHeadingNode(tag));
-            }
-        });
-    }
-    return (<>{['h1', 'h2', 'h3'].map((tag) => {
-        return <button key={tag} type="button" onClick={() => onClick(tag)}>{tag.toUpperCase()}</button>
-    })}
-
-    </>)
-}
-
-function ListToolbarPlugin() {
-    const [editor] = useLexicalComposerContext();
-
-    const onClick = (tag) => {
-        editor.update((editorState) => {
-            const selection = $getSelection();
-            if (tag === 'ol'){
-                editor.dispatchCommand(INSERT_ORDERED_LIST_COMMAND, undefined)
-            } else {
-                editor.dispatchCommand(INSERT_UNORDERED_LIST_COMMAND, undefined)
-            }
-        });
-    }
-    return (<>{['ol', 'ul'].map((tag) => {
-        return <button key={tag} type="button" onClick={() => onClick(tag)}>{tag.toUpperCase()}</button>
-    })}
-
-    </>)
-}
-
-function ToolbarPlugin() {
-    const [editor] = useLexicalComposerContext();
-
-    return (
-        <div className={'content-editable_toolBarPlugin-toolbar-wrapper'}>
-            <HeadingTag/>
-            <ListToolbarPlugin/>
-        </div>
-    );
-}
-
 
 export default function Editor(props) {
     const [editorState, setEditorState] = useState();
