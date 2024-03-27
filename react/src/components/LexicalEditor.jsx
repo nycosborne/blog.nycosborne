@@ -9,10 +9,13 @@ import {HistoryPlugin} from '@lexical/react/LexicalHistoryPlugin';
 import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary';
 import {useLexicalComposerContext} from "@lexical/react/LexicalComposerContext";
 import {OnChangePlugin} from "@lexical/react/LexicalOnChangePlugin";
-import { HeadingNode, $createHeadingNode } from "@lexical/rich-text";
+import {HeadingNode, $createHeadingNode} from "@lexical/rich-text";
 import editor from "quill/core/editor.js";
 
 const theme = {
+    heading: {
+        h1: 'test-class',
+    },
     text: {
         bold: 'test-class'
     },
@@ -34,23 +37,7 @@ const initialConfig = {
     ],
 };
 
-// function MyHeadingPlugin() {
-//     const [editor] = useLexicalComposerContext();
-//    const onClick = (e) => {
-//        // e.preventDefault();
-//        editor.update((editorState) => {
-//            // const selection = $getSelection(editor);
-//            const root = $getRoot(editor);
-//            // const heading = new HeadingNode({text: 'Heading'});
-//            // root.insertChild(heading, selection);
-//            root.append($createHeadingNode({text: 'Heading'}));
-//        });
-//
-//    }
-//     return <button>Heading</button>
-// }
-
-function MyHeadingPlugin() {
+function HeadingPlugin() {
     const [editor] = useLexicalComposerContext();
     const onClick = (e) => {
         e.preventDefault()
@@ -64,10 +51,7 @@ function MyHeadingPlugin() {
 
 
 export default function Editor(props) {
-
-
     const [editorState, setEditorState] = useState();
-
     function onChange(editorState) {
         setEditorState(editorState);
         console.log(editorState);
@@ -77,10 +61,8 @@ export default function Editor(props) {
             }
         });
     }
-
-
     // When the editor changes, you can get notified via the
-// OnChangePlugin!
+    // OnChangePlugin!
     function MyOnChangePlugin({onChange}) {
         // Access the editor through the LexicalComposerContext
         const [editor] = useLexicalComposerContext();
@@ -97,7 +79,7 @@ export default function Editor(props) {
 
     return (
         <LexicalComposer initialConfig={initialConfig}>
-            <MyHeadingPlugin/>
+            <HeadingPlugin/>
             <RichTextPlugin
                 contentEditable={<ContentEditable className={'content-editable'}/>}
                 placeholder={<div className={'content-editable_placeholder'}>
