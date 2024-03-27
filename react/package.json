@@ -9,8 +9,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@lexical/list": "^0.14.2",
     "@lexical/react": "^0.14.2",
     "@lexical/rich-text": "^0.14.2",
+    "@lexical/selection": "^0.14.2",
     "axios": "^1.2.3",
     "bootstrap": "^5.2.3",
     "lexical": "^0.14.2",

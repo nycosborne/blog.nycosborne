@@ -1,7 +1,6 @@
-import {$getRoot, $createTextNode} from 'lexical';
 import React, {useEffect, useState} from 'react';
-
 import {AutoFocusPlugin} from '@lexical/react/LexicalAutoFocusPlugin';
+
 import {LexicalComposer} from '@lexical/react/LexicalComposer';
 import {RichTextPlugin} from '@lexical/react/LexicalRichTextPlugin';
 import {ContentEditable} from '@lexical/react/LexicalContentEditable';
@@ -10,11 +9,17 @@ import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary';
 import {useLexicalComposerContext} from "@lexical/react/LexicalComposerContext";
 import {OnChangePlugin} from "@lexical/react/LexicalOnChangePlugin";
 import {HeadingNode, $createHeadingNode} from "@lexical/rich-text";
-import editor from "quill/core/editor.js";
+import {$getRoot, $createTextNode, $getSelection, $isRangeSelection} from 'lexical';
+import {$setBlocksType} from "@lexical/selection"
+import {ListPlugin} from "@lexical/react/LexicalListPlugin";
+import {INSERT_ORDERED_LIST_COMMAND, INSERT_UNORDERED_LIST_COMMAND, ListItemNode, ListNode} from "@lexical/list";
+
 
 const theme = {
     heading: {
-        h1: 'test-class',
+        h1: 'content-editable_h1',
+        h2: 'content-editable_h2',
+        h3: 'content-editable_h3',
     },
     text: {
         bold: 'test-class'
@@ -28,16 +33,7 @@ function onError(error) {
     console.error(error);
 }
 
-const initialConfig = {
-    namespace: 'MyEditor',
-    theme: theme,
-    onError,
-    nodes: [
-        HeadingNode,
-    ],
-};
-
-function HeadingPlugin() {
+function PrintsToEditor() {
     const [editor] = useLexicalComposerContext();
     const onClick = (e) => {
         e.preventDefault()
@@ -49,9 +45,68 @@ function HeadingPlugin() {
     return <button type="button" onClick={onClick}>Heading</button>
 }
 
+function HeadingTag() {
+    const [editor] = useLexicalComposerContext();
+
+    const onClick = (tag) => {
+        editor.update((editorState) => {
+            const selection = $getSelection();
+            if ($isRangeSelection(selection)) {
+                $setBlocksType(selection, () => $createHeadingNode(tag));
+            }
+        });
+    }
+    return (<>{['h1', 'h2', 'h3'].map((tag) => {
+        return <button key={tag} type="button" onClick={() => onClick(tag)}>{tag.toUpperCase()}</button>
+    })}
+
+    </>)
+}
+
+function ListToolbarPlugin() {
+    const [editor] = useLexicalComposerContext();
+
+    const onClick = (tag) => {
+        editor.update((editorState) => {
+            const selection = $getSelection();
+            if (tag === 'ol'){
+                editor.dispatchCommand(INSERT_ORDERED_LIST_COMMAND, undefined)
+            } else {
+                editor.dispatchCommand(INSERT_UNORDERED_LIST_COMMAND, undefined)
+            }
+        });
+    }
+    return (<>{['ol', 'ul'].map((tag) => {
+        return <button key={tag} type="button" onClick={() => onClick(tag)}>{tag.toUpperCase()}</button>
+    })}
+
+    </>)
+}
+
+function ToolbarPlugin() {
+    const [editor] = useLexicalComposerContext();
+
+    return (
+        <div className={'content-editable_toolBarPlugin-toolbar-wrapper'}>
+            <HeadingTag/>
+            <ListToolbarPlugin/>
+        </div>
+    );
+}
+
 
 export default function Editor(props) {
     const [editorState, setEditorState] = useState();
+
+    const initialConfig = {
+        namespace: 'MyEditor',
+        theme: theme,
+        onError,
+        nodes: [
+            HeadingNode, ListNode, ListItemNode
+        ],
+    };
+
     function onChange(editorState) {
         setEditorState(editorState);
         console.log(editorState);
@@ -61,6 +116,7 @@ export default function Editor(props) {
             }
         });
     }
+
     // When the editor changes, you can get notified via the
     // OnChangePlugin!
     function MyOnChangePlugin({onChange}) {
@@ -79,7 +135,8 @@ export default function Editor(props) {
 
     return (
         <LexicalComposer initialConfig={initialConfig}>
-            <HeadingPlugin/>
+            <ToolbarPlugin/>
+            <ListPlugin/>
             <RichTextPlugin
                 contentEditable={<ContentEditable className={'content-editable'}/>}
                 placeholder={<div className={'content-editable_placeholder'}>

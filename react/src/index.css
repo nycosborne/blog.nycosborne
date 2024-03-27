@@ -85,7 +85,7 @@ body {
 .content-editable_placeholder {
     /*color: #212529 !important;*/
     position: absolute !important;
-    top: 40px;
+    top: 70px;
     padding: 0 8px;
 }
 
@@ -93,35 +93,25 @@ body {
     position: relative !important;
 }
 
-.content-editable_toolbar {
-    background: #f5f5f5 !important;
-    border: none !important;
+.content-editable_h1{
+    font-size: 2.5rem;
     color: #212529 !important;
-    display: flex !important;
-    justify-content: space-between !important;
-    padding: 8px 8px;
+    text-decoration: underline;
 }
 
-.ltr {
-    text-align: left;
+.content-editable_h2{
+    font-size: 2rem;
+    color: #212529 !important;
+    font-weight: bold;
 }
 
-.rtl {
-    text-align: right;
+.content-editable_h3{
+    font-size: 1.75rem;
+    color: green;
 }
 
-.editor-placeholder {
-    color: #999;
-    overflow: hidden;
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    user-select: none;
-    pointer-events: none;
+.content-editable_toolBarPlugin-toolbar-wrapper {
+    display: flex;
 }
 
-.editor-paragraph {
-    margin: 0 0 15px 0;
-    position: relative;
-}
 
